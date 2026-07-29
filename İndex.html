@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>İyi ki Doğdun Melisa! 🎉</title>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <title>İyi ki Doğdun Melisa! 🌸</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Konfeti Kütüphanesi -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -13,7 +15,7 @@
         }
 
         body {
-            background-color: #1a1a2e;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
             color: #fff;
             font-family: 'Poppins', sans-serif;
             min-height: 100vh;
@@ -26,128 +28,220 @@
             padding: 20px;
         }
 
+        /* Yüzen Arka Plan Işıkları */
+        .bg-glow {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 105, 180, 0.15);
+            filter: blur(80px);
+            border-radius: 50%;
+            z-index: 0;
+            animation: floatGlow 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes floatGlow {
+            0% { transform: translate(-50px, -50px); }
+            100% { transform: translate(50px, 50px); }
+        }
+
         .container {
-            max-width: 600px;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 182, 193, 0.3);
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 0 30px rgba(255, 105, 180, 0.2);
+            position: relative;
+            max-width: 650px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 40px 30px;
+            border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 40px rgba(255, 105, 180, 0.1);
             z-index: 2;
+            animation: containerEntry 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes containerEntry {
+            from { opacity: 0; transform: translateY(30px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
         h1 {
             font-family: 'Press Start 2P', monospace;
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             color: #ff758c;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             line-height: 1.6;
+            text-shadow: 0 0 15px rgba(255, 117, 140, 0.5);
         }
 
         p {
-            font-size: 1.1rem;
-            color: #ddd;
-            margin-bottom: 30px;
-            line-height: 1.6;
+            font-size: 1.05rem;
+            color: #e0e0e0;
+            margin-bottom: 25px;
+            line-height: 1.7;
+            font-weight: 300;
         }
 
-        /* Pixel Art Çiçek Tablosu */
+        /* Gelişmiş Pixel Art Çiçek */
+        .pixel-flower-wrapper {
+            display: inline-block;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            margin: 15px 0 25px 0;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.5);
+        }
+
         .pixel-flower {
             display: inline-grid;
             grid-template-columns: repeat(9, 14px);
             grid-template-rows: repeat(9, 14px);
-            gap: 1px;
-            margin: 20px 0;
-            padding: 10px;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 12px;
+            gap: 2px;
         }
 
         .pixel {
             width: 14px;
             height: 14px;
-            border-radius: 2px;
+            border-radius: 3px;
+            transition: transform 0.2s;
         }
 
-        /* Renk Kodları */
-        .pink { background-color: #ff758c; box-shadow: inset 0 0 2px rgba(0,0,0,0.3); }
-        .yellow { background-color: #ffd700; box-shadow: inset 0 0 2px rgba(0,0,0,0.3); }
-        .green { background-color: #4caf50; box-shadow: inset 0 0 2px rgba(0,0,0,0.3); }
+        .pixel:hover {
+            transform: scale(1.3);
+        }
+
+        /* Renk Paleti ve Parlamalar */
+        .pink { background-color: #ff6584; box-shadow: 0 0 8px rgba(255, 101, 132, 0.6); }
+        .light-pink { background-color: #ff8fab; box-shadow: 0 0 6px rgba(255, 143, 171, 0.5); }
+        .yellow { background-color: #ffd166; box-shadow: 0 0 8px rgba(255, 209, 102, 0.6); }
+        .green { background-color: #06d6a0; box-shadow: 0 0 6px rgba(6, 214, 160, 0.5); }
         .empty { background-color: transparent; }
 
         .btn {
-            background: linear-gradient(45deg, #ff758c, #ff7eb3);
+            background: linear-gradient(135deg, #ff6584, #ff8fab);
             color: white;
             border: none;
-            padding: 12px 30px;
-            font-size: 1rem;
+            padding: 14px 35px;
+            font-size: 1.05rem;
             font-weight: 600;
             border-radius: 50px;
             cursor: pointer;
-            transition: 0.3s;
-            box-shadow: 0 4px 15px rgba(255, 117, 140, 0.4);
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(255, 101, 132, 0.4);
+            letter-spacing: 0.5px;
         }
 
         .btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 20px rgba(255, 117, 140, 0.6);
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 10px 25px rgba(255, 101, 132, 0.6);
+            background: linear-gradient(135deg, #ff5273, #ff7b9c);
+        }
+
+        .btn:active {
+            transform: translateY(1px);
         }
 
         #message {
-            margin-top: 20px;
-            font-size: 1.2rem;
-            color: #ffeb3b;
+            margin-top: 25px;
+            font-size: 1.15rem;
+            color: #ffd166;
             display: none;
-            animation: fadeIn 0.8s ease-in-out;
+            padding: 20px;
+            background: rgba(255, 209, 102, 0.08);
+            border: 1px solid rgba(255, 209, 102, 0.2);
+            border-radius: 14px;
+            animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            line-height: 1.6;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+
+        .footer-note {
+            margin-top: 30px;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.4);
+            letter-spacing: 1px;
         }
     </style>
 </head>
 <body>
 
+    <div class="bg-glow"></div>
+
     <div class="container">
         <h1>İyi ki Doğdun<br>Melisa! 🌸</h1>
-        <p>Hayatına neşe, huzur ve rengarenk anlar katması dileğiyle. Doğum günün kutlu olsun!</p>
+        <p>Yeni yaşın sana dilediğin tüm güzellikleri, kalbini ısıtacak sürprizleri ve unutulmaz anları getirsin. Mutlu yıllar!</p>
 
-        <!-- Pixel Art Çiçek Tasarımı -->
-        <div class="pixel-flower" id="flower">
-            <!-- Satır 1 -->
-            <div class="pixel empty"></div><div class="pixel empty"></div><div class="pixel pink"></div><div class="pixel pink"></div><div class="pixel pink"></div><div class="pixel empty"></div><div class="pixel empty"></div><div class="pixel empty"></div><div class="pixel empty"></div>
-            <!-- Satır 2 -->
-            <div class="pixel empty"></div><div class="pixel pink"></div><div class="pixel pink"></div><div class="pixel yellow"></div><div class="pixel pink"></div><div class="pixel pink"></div><div class="pixel empty"></div><div class="pixel empty"></div><div class="pixel empty"></div>
-            <!-- Satır 3 -->
-            <div class="pixel pink"></div><div class="pixel pink"></div><div class="pixel yellow"></div><div class="pixel yellow"></div><div class="pixel yellow"></div><div class="pixel pink"></div><div class="pixel pink"></div><div class="pixel empty"></div><div class="pixel empty"></div>
-            <!-- Satır 4 -->
-            <div class="pixel pink"></div><div class="pixel yellow"></div><div class="pixel yellow"></div><div class="pixel yellow"></div><div class="pixel yellow"></div><div class="pixel yellow"></div><div class="pixel pink"></div><div class="pixel empty"></div><div class="pixel empty"></div>
-            <!-- Satır 5 -->
-            <div class="pixel pink"></div><div class="pixel pink"></div><div class="pixel yellow"></div><div class="pixel yellow"></div><div class="pixel yellow"></div><div class="pixel pink"></div><div class="pixel pink"></div><div class="pixel empty"></div><div class="pixel empty"></div>
-            <!-- Satır 6 -->
-            <div class="pixel empty"></div><div class="pixel pink"></div><div class="pixel pink"></div><div class="pixel yellow"></div><div class="pixel pink"></div><div class="pixel pink"></div><div class="pixel empty"></div><div class="pixel empty"></div><div class="pixel empty"></div>
-            <!-- Satır 7 -->
-            <div class="pixel empty"></div><div class="pixel empty"></div><div class="pixel pink"></div><div class="pixel pink"></div><div class="pixel pink"></div><div class="pixel empty"></div><div class="pixel green"></div><div class="pixel green"></div><div class="pixel empty"></div>
-            <!-- Satır 8 -->
-            <div class="pixel empty"></div><div class="pixel empty"></div><div class="pixel empty"></div><div class="pixel green"></div><div class="pixel empty"></div><div class="pixel green"></div><div class="pixel green"></div><div class="pixel empty"></div><div class="pixel empty"></div>
-            <!-- Satır 9 -->
-            <div class="pixel empty"></div><div class="pixel empty"></div><div class="pixel empty"></div><div class="pixel green"></div><div class="pixel green"></div><div class="pixel empty"></div><div class="pixel empty"></div><div class="pixel empty"></div><div class="pixel empty"></div>
+        <!-- Gelişmiş Pixel Art Çiçek -->
+        <div class="pixel-flower-wrapper">
+            <div class="pixel-flower" id="flower">
+                <!-- Satır 1 -->
+                <div class="pixel empty"></div><div class="pixel empty"></div><div class="pixel pink"></div><div class="pixel light-pink"></div><div class="pixel pink"></div><div class="pixel empty"></div><div class="pixel empty"></div><div class="pixel empty"></div><div class="pixel empty"></div>
+                <!-- Satır 2 -->
+                <div class="pixel empty"></div><div class="pixel pink"></div><div class="pixel light-pink"></div><div class="pixel yellow"></div><div class="pixel light-pink"></div><div class="pixel pink"></div><div class="pixel empty"></div><div class="pixel empty"></div><div class="pixel empty"></div>
+                <!-- Satır 3 -->
+                <div class="pixel pink"></div><div class="pixel light-pink"></div><div class="pixel yellow"></div><div class="pixel yellow"></div><div class="pixel yellow"></div><div class="pixel light-pink"></div><div class="pixel pink"></div><div class="pixel empty"></div><div class="pixel empty"></div>
+                <!-- Satır 4 -->
+                <div class="pixel light-pink"></div><div class="pixel yellow"></div><div class="pixel yellow"></div><div class="pixel yellow"></div><div class="pixel yellow"></div><div class="pixel yellow"></div><div class="pixel light-pink"></div><div class="pixel empty"></div><div class="pixel empty"></div>
+                <!-- Satır 5 -->
+                <div class="pixel pink"></div><div class="pixel light-pink"></div><div class="pixel yellow"></div><div class="pixel yellow"></div><div class="pixel yellow"></div><div class="pixel light-pink"></div><div class="pixel pink"></div><div class="pixel empty"></div><div class="pixel empty"></div>
+                <!-- Satır 6 -->
+                <div class="pixel empty"></div><div class="pixel pink"></div><div class="pixel light-pink"></div><div class="pixel yellow"></div><div class="pixel light-pink"></div><div class="pixel pink"></div><div class="pixel empty"></div><div class="pixel empty"></div><div class="pixel empty"></div>
+                <!-- Satır 7 -->
+                <div class="pixel empty"></div><div class="pixel empty"></div><div class="pixel pink"></div><div class="pixel light-pink"></div><div class="pixel pink"></div><div class="pixel empty"></div><div class="pixel green"></div><div class="pixel green"></div><div class="pixel empty"></div>
+                <!-- Satır 8 -->
+                <div class="pixel empty"></div><div class="pixel empty"></div><div class="pixel empty"></div><div class="pixel green"></div><div class="pixel empty"></div><div class="pixel green"></div><div class="pixel green"></div><div class="pixel empty"></div><div class="pixel empty"></div>
+                <!-- Satır 9 -->
+                <div class="pixel empty"></div><div class="pixel empty"></div><div class="pixel empty"></div><div class="pixel green"></div><div class="pixel green"></div><div class="pixel empty"></div><div class="pixel empty"></div><div class="pixel empty"></div><div class="pixel empty"></div>
+            </div>
         </div>
 
         <br>
-        <button class="btn" onclick="surprizGoster()">Sürprizi Aç 🎁</button>
-        <div id="message">İyi ki varsın Melisa, yüzünden gülücükler hiç eksik olmasın! ✨</div>
+        <button class="btn" onclick="kutla()">Sürprizi Aç 🎁</button>
+        
+        <div id="message">
+            ✨ İyi ki varsın Melisa! Yüzündeki gülümseme ve enerjin etrafındaki herkese ışık olmaya devam etsin. Harika bir yaşın olsun! 🎈
+        </div>
+
+        <div class="footer-note">ÖZEL DOĞUM GÜNÜ SÜRPRİZİ</div>
     </div>
 
     <script>
-        function surprizGoster() {
+        function kutla() {
+            // Mesaj kutusunu aç
             const msg = document.getElementById('message');
             msg.style.display = 'block';
+
+            // Muhteşem Konfeti Efekti
+            var duration = 3 * 1000;
+            var end = Date.now() + duration;
+
+            (function frame() {
+                confetti({
+                    particleCount: 4,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 },
+                    colors: ['#ff6584', '#ffd166', '#06d6a0', '#ff8fab']
+                });
+                confetti({
+                    particleCount: 4,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 },
+                    colors: ['#ff6584', '#ffd166', '#06d6a0', '#ff8fab']
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            }());
         }
     </script>
 
 </body>
 </html>
-
