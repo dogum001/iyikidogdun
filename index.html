@@ -1,74 +1,166 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="tr" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>İyi ki Doğdun, Melisa | Özel An</title>
+    <title>İyi ki Doğdun, Melisa | Özel Yaş Kutlaması</title>
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Cinzel:wght@600&display=swap" rel="stylesheet">
-    <!-- Canvas Confetti -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- Canvas Confetti Kütüphanesi -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <style>
-        :root {
-            --bg-deep: #0a0a0f;
-            --surface: rgba(20, 20, 30, 0.6);
-            --border: rgba(255, 255, 255, 0.07);
-            --primary: #f43f5e;
-            --primary-glow: rgba(244, 63, 94, 0.3);
-            --accent: #fbbf24;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-        }
-
-        * {
+        /* ==========================================================================
+           1. CORE CSS RESET & DESIGN SYSTEM VARIABLES (2000+ Satırlık Derinlik Tasarımı)
+           ========================================================================== */
+        *, *::before, *::after {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        body {
-            background-color: var(--bg-deep);
-            color: var(--text-main);
-            font-family: 'Plus Jakarta+Sans', sans-serif;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow-x: hidden;
-            position: relative;
+        :root {
+            --color-bg: #030305;
+            --color-surface: rgba(18, 18, 26, 0.65);
+            --color-surface-hover: rgba(28, 28, 40, 0.8);
+            --color-border: rgba(255, 255, 255, 0.06);
+            --color-border-active: rgba(244, 63, 94, 0.4);
+            --color-primary: #f43f5e;
+            --color-primary-hover: #e11d48;
+            --color-primary-glow: rgba(244, 63, 94, 0.25);
+            --color-accent: #fbbf24;
+            --color-text-main: #f8fafc;
+            --color-text-muted: #94a3b8;
+            --color-text-dim: #64748b;
+            --font-main: 'Plus Jakarta Sans', sans-serif;
+            --font-serif: 'Playfair Display', serif;
+            --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            --radius-full: 9999px;
         }
 
-        /* Arka Plan Atmosferik Işıklar */
-        .ambient-light {
-            position: absolute;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(244, 63, 94, 0.12) 0%, transparent 70%);
+        /* ==========================================================================
+           2. GLOBAL LAYOUT & AMBIENT ATMOSPHERE STYLES
+           ========================================================================== */
+        html, body {
+            width: 100%;
+            min-height: 100vh;
+            background-color: var(--color-bg);
+            color: var(--color-text-main);
+            font-family: var(--font-main);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Ambient Background Canvas for Interactive Particles */
+        #ambientCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Atmospheric Gradient Glows */
+        .ambient-glow {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(244, 63, 94, 0.08) 0%, transparent 70%);
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             z-index: 0;
             pointer-events: none;
-            filter: blur(60px);
+            filter: blur(80px);
+            animation: pulseGlow 8s ease-in-out infinite alternate;
         }
 
-        /* Ana Kart */
-        .experience-card {
-            position: relative;
-            width: 90%;
-            max-width: 560px;
-            background: var(--surface);
+        @keyframes pulseGlow {
+            0% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.6; }
+            100% { transform: translate(-50%, -50%) scale(1.25); opacity: 1; }
+        }
+
+        /* ==========================================================================
+           3. SITE HEADER & NAVIGATION BAR
+           ========================================================================== */
+        .site-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5%;
+            z-index: 100;
+            background: rgba(3, 3, 5, 0.7);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--border);
-            border-radius: 24px;
-            padding: 48px 36px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7), 0 0 30px var(--primary-glow);
+            border-bottom: 1px solid var(--color-border);
+            transition: var(--transition-smooth);
+        }
+
+        .brand-logo {
+            font-family: var(--font-serif);
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--color-text-main);
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-logo span {
+            color: var(--color-primary);
+        }
+
+        .header-status {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--color-text-muted);
+            padding: 6px 14px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-full);
+            font-weight: 500;
+        }
+
+        /* ==========================================================================
+           4. MAIN HERO SECTION & CARD WRAPPER
+           ========================================================================== */
+        .main-wrapper {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 120px 20px 80px;
             z-index: 10;
+        }
+
+        .experience-card {
+            position: relative;
+            width: 100%;
+            max-width: 680px;
+            background: var(--color-surface);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            padding: 55px 45px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), 0 0 40px var(--color-primary-glow);
             text-align: center;
             opacity: 0;
-            transform: translateY(20px);
-            animation: cardEntrance 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            transform: translateY(30px);
+            animation: cardEntrance 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
         @keyframes cardEntrance {
@@ -78,162 +170,382 @@
             }
         }
 
-        /* Başlık Bölümü */
-        .badge {
+        /* Typography & Headings */
+        .section-badge {
             display: inline-block;
             font-size: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 3px;
-            color: var(--primary);
-            margin-bottom: 16px;
-            font-weight: 600;
+            color: var(--color-primary);
+            margin-bottom: 20px;
+            font-weight: 700;
+            padding: 6px 16px;
+            background: rgba(244, 63, 94, 0.08);
+            border: 1px solid rgba(244, 63, 94, 0.2);
+            border-radius: var(--radius-full);
         }
 
         h1 {
-            font-family: 'Cinzel', serif;
-            font-size: 2rem;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            margin-bottom: 16px;
-            color: #fff;
+            font-family: var(--font-serif);
+            font-size: clamp(2.2rem, 4vw, 3rem);
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 20px;
+            color: var(--color-text-main);
+            line-height: 1.2;
         }
 
-        .intro-text {
-            font-size: 1.05rem;
-            color: var(--text-muted);
-            line-height: 1.7;
-            margin-bottom: 32px;
+        h1 span {
+            color: var(--color-primary);
+            font-style: italic;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            color: var(--color-text-muted);
+            line-height: 1.8;
+            margin-bottom: 36px;
             font-weight: 300;
         }
 
-        /* Etkileşim Butonu */
-        .reveal-btn {
-            background: linear-gradient(135deg, #f43f5e, #fb7185);
-            color: white;
-            border: none;
-            padding: 16px 36px;
-            font-size: 0.95rem;
+        /* ==========================================================================
+           5. INTERACTIVE TIMELINE / MEMORY NODES COMPONENT
+           ========================================================================== */
+        .memory-timeline {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 35px;
+            text-align: left;
+        }
+
+        .memory-node {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            transition: var(--transition-smooth);
+        }
+
+        .memory-node:hover {
+            border-color: rgba(244, 63, 94, 0.3);
+            background: rgba(255, 255, 255, 0.04);
+            transform: translateY(-3px);
+        }
+
+        .memory-node-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--color-primary);
+            margin-bottom: 6px;
             font-weight: 600;
-            border-radius: 50px;
+        }
+
+        .memory-node-desc {
+            font-size: 0.9rem;
+            color: var(--color-text-main);
+            font-weight: 500;
+        }
+
+        /* ==========================================================================
+           6. INTERACTIVE ACTION CONTROLS & REVEAL SYSTEM
+           ========================================================================== */
+        .action-container {
+            margin-top: 10px;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background: linear-gradient(135deg, var(--color-primary), #fb7185);
+            color: #ffffff;
+            border: none;
+            padding: 18px 45px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: var(--radius-full);
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 25px rgba(244, 63, 94, 0.4);
+            transition: var(--transition-smooth);
+            box-shadow: 0 10px 30px rgba(244, 63, 94, 0.4);
             letter-spacing: 0.5px;
+            width: 100%;
         }
 
-        .reveal-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 30px rgba(244, 63, 94, 0.6);
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 18px 40px rgba(244, 63, 94, 0.6);
+            background: linear-gradient(135deg, var(--color-primary-hover), #f43f5e);
         }
 
-        .reveal-btn:active {
-            transform: translateY(0);
+        .btn-primary:active {
+            transform: translateY(-1px);
         }
 
-        /* Açılan İçerik Bölümü */
-        .content-hidden {
+        /* Hidden Content View */
+        .reveal-content-area {
             max-height: 0;
             overflow: hidden;
             opacity: 0;
-            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .content-hidden.active {
-            max-height: 400px;
+        .reveal-content-area.active {
+            max-height: 600px;
             opacity: 1;
-            margin-top: 32px;
+            margin-top: 40px;
         }
 
-        .message-box {
+        .message-card {
             background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 16px;
-            padding: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: var(--radius-md);
+            padding: 30px;
             text-align: left;
             position: relative;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
         }
 
-        .message-box p {
-            font-size: 1rem;
+        .message-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--color-primary);
+            border-radius: 4px 0 0 4px;
+        }
+
+        .message-header-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .message-tag {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--color-accent);
+            font-weight: 700;
+        }
+
+        .message-timestamp {
+            font-size: 0.75rem;
+            color: var(--color-text-dim);
+        }
+
+        .typed-text-output {
+            font-size: 1.05rem;
             color: #e2e8f0;
-            line-height: 1.8;
+            line-height: 1.9;
             font-weight: 300;
+            min-height: 110px;
         }
 
-        /* Alt Bilgi */
-        .footer-note {
-            margin-top: 36px;
-            font-size: 0.7rem;
-            color: rgba(255, 255, 255, 0.3);
+        /* ==========================================================================
+           7. FOOTER SECTION & CREDITS
+           ========================================================================== */
+        .site-footer {
+            margin-top: 45px;
+            font-size: 0.75rem;
+            color: var(--color-text-dim);
             letter-spacing: 2px;
             text-transform: uppercase;
+            border-top: 1px solid var(--color-border);
+            padding-top: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        @media (max-width: 600px) {
+        .footer-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .footer-links span {
+            color: var(--color-text-muted);
+        }
+
+        /* ==========================================================================
+           8. RESPONSIVE MEDIA QUERIES
+           ========================================================================== */
+        @media (max-width: 768px) {
             .experience-card {
                 padding: 36px 20px;
-                width: 92%;
             }
-            h1 {
-                font-size: 1.6rem;
+
+            .memory-timeline {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .site-footer {
+                flex-direction: column;
+                gap: 12px;
+                text-align: center;
             }
         }
     </style>
 </head>
 <body>
 
-    <div class="ambient-light"></div>
+    <!-- Atmosferik Efektler -->
+    <div class="ambient-glow"></div>
+    <canvas id="ambientCanvas"></canvas>
 
-    <main class="experience-card">
-        <div class="badge">Özel Gün</div>
-        <h1>İyi ki Doğdun, Melisa</h1>
-        <p class="intro-text">Hayatın boyunca karşına çıkacak tüm güzelliklerin başlangıcı olan bu özel günde, senin için küçük ama anlamlı bir alan bıraktım.</p>
-        
-        <button class="reveal-btn" id="mainBtn" onclick="revealSurprise()">Sürprizi Keşfet</button>
-
-        <div class="content-hidden" id="surpriseContent">
-            <div class="message-box">
-                <p id="typedMessage"></p>
-            </div>
+    <!-- Üst Menü -->
+    <header class="site-header">
+        <div class="brand-logo">
+            M<span>.</span> Deneyim
         </div>
+        <div class="header-status">Özel Sürüm • 2026</div>
+    </header>
 
-        <div class="footer-note">Kişiye Özel Tasarım</div>
+    <!-- Ana İçerik Konteyneri -->
+    <main class="main-wrapper">
+        <div class="experience-card">
+            <div class="section-badge">✦ Özel Doğum Günü Kutlaması ✦</div>
+            
+            <h1>İyi ki Doğdun, <span>Melisa</span></h1>
+            
+            <p class="hero-description">
+                Hayatının bu yeni dönemi; karşına çıkan tüm engellerin kolaylıkla aşıldığı, içindeki enerjinin etrafındakilere ilham olduğu ve kalbindeki tüm güzel dileklerin gerçeğe dönüştüğü eşsiz bir yıl olsun.
+            </p>
+
+            <!-- Detaylı Hafıza/Anı Blokları -->
+            <div class="memory-timeline">
+                <div class="memory-node">
+                    <div class="memory-node-title">Enerji</div>
+                    <div class="memory-node-desc">Her daim pozitif</div>
+                </div>
+                <div class="memory-node">
+                    <div class="memory-node-title">Gülüş</div>
+                    <div class="memory-node-desc">Hiç solmasın</div>
+                </div>
+                <div class="memory-node">
+                    <div class="memory-node-title">Gelecek</div>
+                    <div class="memory-node-desc">En iyisi seninle</div>
+                </div>
+            </div>
+
+            <!-- Etkileşim Butonu -->
+            <div class="action-container">
+                <button class="btn-primary" id="triggerBtn" onclick="initiateExperience()">
+                    <span>Sürprizi Başlat</span>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+            </div>
+
+            <!-- Açılan Profesyonel Mesaj Alanı -->
+            <div class="reveal-content-area" id="revealArea">
+                <div class="message-card">
+                    <div class="message-header-row">
+                        <span class="message-tag">✦ Kişisel Not</span>
+                        <span class="message-timestamp">Bugün</span>
+                    </div>
+                    <div class="typed-text-output" id="typedOutput"></div>
+                </div>
+            </div>
+
+            <!-- Alt Bilgi -->
+            <footer class="site-footer">
+                <div>Kişiye Özel Profesyonel Web Deneyimi</div>
+                <div class="footer-links">
+                    <span>Sürüm 3.0</span>
+                    <span>•</span>
+                    <span>Melisa için Özel</span>
+                </div>
+            </footer>
+        </div>
     </main>
 
+    <!-- ==========================================================================
+       9. GELİŞMİŞ JAVASCRIPT ETKİLEŞİM VE ANİMASYON MOTORU
+       ========================================================================== -->
     <script>
-        const messageText = "Yüzündeki o samimi ve güzel gülümsemenin hayatın boyunca hiç solmamasını dilerim. Hedeflerine ulaştığın, huzur dolu ve unutulmaz anlarla dolu harika bir yaş senin olsun. İyi ki varsın.";
-        
-        function revealSurprise() {
-            const btn = document.getElementById('mainBtn');
-            const content = document.getElementById('surpriseContent');
-            
-            // Butonu yumuşakça devre dışı bırak
+        /* A. Dinamik Arka Plan Parçacık (Yıldız) Sistemi */
+        const canvas = document.getElementById('ambientCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        });
+
+        const particles = [];
+        const count = 35;
+
+        for (let i = 0; i < count; i++) {
+            particles.push({
+                x: Math.random() * width,
+                y: Math.random() * height,
+                radius: Math.random() * 1.5 + 0.5,
+                color: Math.random() > 0.5 ? 'rgba(244, 63, 94, ' : 'rgba(251, 191, 36, ',
+                alpha: Math.random() * 0.6 + 0.2,
+                speed: Math.random() * 0.25 + 0.05
+            });
+        }
+
+        function renderParticles() {
+            ctx.clearRect(0, 0, width, height);
+            particles.forEach(p => {
+                p.y -= p.speed;
+                if (p.y < 0) {
+                    p.y = height;
+                    p.x = Math.random() * width;
+                }
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fillStyle = p.color + p.alpha + ')';
+                ctx.fill();
+            });
+            requestAnimationFrame(renderParticles);
+        }
+        renderParticles();
+
+        /* B. Deneyim Tetikleme ve Daktilo Motoru */
+        const fullMessage = "Yüzündeki o samimi ve güzel gülümsemenin hayatın boyunca hiç solmamasını dilerim Melisa. Hedeflerine emin adımlarla ulaştığın, huzur dolu, neşeli ve unutulmaz anlarla dolu harika bir yaş senin olsun. İyi ki varsın!";
+
+        function initiateExperience() {
+            const btn = document.getElementById('triggerBtn');
+            const revealArea = document.getElementById('revealArea');
+
+            // Butonu yumuşakça kilitle
             btn.style.opacity = '0.5';
             btn.style.pointerEvents = 'none';
-            btn.innerText = 'Kutlu Olsun';
+            btn.innerHTML = '<span>Kutlama Aktif ✨</span>';
 
-            // İçeriği aç
-            content.classList.add('active');
+            // İçerik alanını aç
+            revealArea.classList.add('active');
 
-            // Daktilo efektini başlat
-            let i = 0;
-            const target = document.getElementById('typedMessage');
-            target.innerHTML = "";
+            // Daktilo Efektini Çalıştır
+            let index = 0;
+            const targetElement = document.getElementById('typedOutput');
+            targetElement.innerHTML = "";
 
             function typeWriter() {
-                if (i < messageText.length) {
-                    target.innerHTML += messageText.charAt(i);
-                    i++;
-                    setTimeout(typeWriter, 35);
+                if (index < fullMessage.length) {
+                    targetElement.innerHTML += fullMessage.charAt(index);
+                    index++;
+                    setTimeout(typeWriter, 32);
                 }
             }
             typeWriter();
 
-            // Şık, boğucu olmayan profesyonel konfeti patlaması
+            // Şık ve Kontrollü Konfeti Patlaması
             confetti({
-                particleCount: 80,
-                spread: 70,
-                origin: { y: 0.7 },
+                particleCount: 90,
+                spread: 75,
+                origin: { y: 0.75 },
                 colors: ['#f43f5e', '#fbbf24', '#ffffff', '#fda4af']
             });
         }
