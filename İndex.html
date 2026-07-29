@@ -3,65 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mutlu Yıllar Melisa | Teyvat'ın Kraliçesi</title>
+    <title>Mutlu Yıllar Melisa | Teyvat'ın Efsanevi Gezgini</title>
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Nunito:wght@300;400;600;800&display=swap" rel="stylesheet">
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
-            --primary-glow: #00ffcc;
-            --secondary-glow: #9d4edd;
+            --genshin-cyan: #00ffcc;
+            --genshin-purple: #9d4edd;
             --genshin-gold: #ffcc00;
-            --bg-dark: #050b14;
-            --card-bg: rgba(10, 25, 47, 0.85);
+            --genshin-bg: #070b19;
+            --card-glass: rgba(11, 19, 43, 0.75);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Nunito', sans-serif;
             user-select: none;
         }
 
         body {
-            background-color: var(--bg-dark);
+            background-color: var(--genshin-bg);
             color: #ffffff;
             overflow-x: hidden;
             position: relative;
         }
 
-        /* Arka Plan Efekti & Parçacıklar */
+        /* Arka Plan Canvas (Parçacık Efektleri) */
         #bg-canvas {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            z-index: -2;
+            z-index: -3;
         }
 
+        /* Arka Planda Süzülen Anime / Oyun Karakterleri Silüetleri/Görselleri */
+        .floating-characters {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -2;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .char-element {
+            position: absolute;
+            background-size: cover;
+            background-repeat: no-repeat;
+            opacity: 0.15;
+            filter: drop-shadow(0 0 15px var(--genshin-cyan));
+            animation: floatChar 12s ease-in-out infinite alternate;
+        }
+
+        .char-1 { width: 300px; height: 450px; top: 10%; left: -5%; background-image: url('https://upload.wikimedia.org/wikipedia/commons/2/23/No-image-available.svg'); animation-delay: 0s; }
+        .char-2 { width: 320px; height: 480px; bottom: -10%; right: -5%; background-image: url('https://upload.wikimedia.org/wikipedia/commons/2/23/No-image-available.svg'); animation-delay: -4s; }
+
+        @keyframes floatChar {
+            0% { transform: translateY(0px) rotate(0deg); }
+            100% { transform: translateY(-30px) rotate(3deg); }
+        }
+
+        /* Ekran Karartma/Derinlik Katmanı */
         .overlay-gradient {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: radial-gradient(circle at center, rgba(5,11,20,0.4) 0%, rgba(5,11,20,0.95) 100%);
+            background: radial-gradient(circle at center, rgba(7,11,25,0.3) 0%, rgba(7,11,25,0.92) 100%);
             z-index: -1;
         }
 
-        /* Müzik Kontrol Butonu */
+        /* Müzik Düğmesi */
         .music-control {
             position: fixed;
-            top: 20px;
-            right: 20px;
+            top: 25px;
+            right: 25px;
             z-index: 1000;
-            background: rgba(0, 255, 204, 0.2);
-            border: 2px solid var(--primary-glow);
-            color: var(--primary-glow);
+            background: rgba(0, 255, 204, 0.1);
+            border: 2px solid var(--genshin-cyan);
+            color: var(--genshin-cyan);
             width: 50px;
             height: 50px;
             border-radius: 50%;
@@ -69,164 +99,225 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 15px rgba(0, 255, 204, 0.4);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 0 20px rgba(0, 255, 204, 0.3);
         }
 
         .music-control:hover {
-            background: var(--primary-glow);
-            color: var(--bg-dark);
-            transform: scale(1.1);
+            background: var(--genshin-cyan);
+            color: var(--genshin-bg);
+            transform: scale(1.15) rotate(15deg);
         }
 
-        /* Ana Konteyner */
+        /* Ana Düzen */
         .container {
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 50px 20px;
             display: flex;
             flex-direction: column;
-            align-items: center;
+            gap: 40px;
             position: relative;
             z-index: 2;
         }
 
-        /* Başlık Alanı */
+        /* Başlık Kısmı */
         header {
             text-align: center;
-            margin-bottom: 60px;
-            animation: fadeInDown 1.5s ease;
+            animation: fadeInDown 1.2s ease;
         }
 
-        .vision-badge {
+        .vision-tag {
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            background: rgba(255, 204, 0, 0.15);
+            background: rgba(255, 204, 0, 0.1);
             border: 1px solid var(--genshin-gold);
-            padding: 8px 20px;
+            padding: 8px 22px;
             border-radius: 30px;
             font-family: 'Cinzel', serif;
             color: var(--genshin-gold);
             font-weight: 700;
             margin-bottom: 15px;
-            box-shadow: 0 0 15px rgba(255, 204, 0, 0.3);
+            box-shadow: 0 0 15px rgba(255, 204, 0, 0.2);
+            animation: pulseGlow 3s infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 15px rgba(255, 204, 0, 0.2); }
+            50% { box-shadow: 0 0 25px rgba(255, 204, 0, 0.5); }
         }
 
         h1 {
             font-family: 'Cinzel', serif;
-            font-size: 3.5rem;
-            background: linear-gradient(45deg, #ffffff, var(--primary-glow), var(--genshin-gold));
+            font-size: 3.2rem;
+            background: linear-gradient(45deg, #ffffff, var(--genshin-cyan), var(--genshin-gold));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 30px rgba(0, 255, 204, 0.4);
+            text-shadow: 0 0 40px rgba(0, 255, 204, 0.3);
             margin-bottom: 10px;
         }
 
         .subtitle {
-            font-size: 1.2rem;
-            color: #a0aec0;
-            letter-spacing: 2px;
+            font-size: 1.15rem;
+            color: #94a3b8;
+            letter-spacing: 3px;
         }
 
-        /* Bölümler (Sections) */
-        .section-card {
-            background: var(--card-bg);
-            border: 1px solid rgba(0, 255, 204, 0.3);
-            border-radius: 20px;
-            padding: 40px;
-            width: 100%;
-            margin-bottom: 40px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            backdrop-filter: blur(10px);
+        /* Kart Bileşenleri */
+        .glass-card {
+            background: var(--card-glass);
+            border: 1px solid rgba(0, 255, 204, 0.25);
+            border-radius: 24px;
+            padding: 35px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
             position: relative;
             overflow: hidden;
-            transition: transform 0.3s ease, border-color 0.3s ease;
+            transition: all 0.4s ease;
         }
 
-        .section-card:hover {
-            border-color: var(--primary-glow);
+        .glass-card:hover {
+            border-color: var(--genshin-cyan);
+            box-shadow: 0 20px 45px rgba(0, 255, 204, 0.15);
             transform: translateY(-5px);
         }
 
-        .section-card::before {
+        .glass-card::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             width: 4px;
             height: 100%;
-            background: linear-gradient(to bottom, var(--primary-glow), var(--secondary-glow));
+            background: linear-gradient(to bottom, var(--genshin-cyan), var(--genshin-purple));
         }
 
         h2 {
             font-family: 'Cinzel', serif;
-            color: var(--primary-glow);
+            color: var(--genshin-cyan);
             margin-bottom: 20px;
-            font-size: 2rem;
+            font-size: 1.8rem;
             display: flex;
             align-items: center;
             gap: 15px;
         }
 
-        /* Geri Sayım / Doğum Günü Sayacı */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
+        /* --- AI SOHBET BÖLÜMÜ (Paimon / Archon AI Simülasyonu) --- */
+        .ai-chat-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
         }
 
-        .stat-box {
-            background: rgba(5, 11, 20, 0.6);
+        .chat-box {
+            background: rgba(5, 10, 22, 0.85);
             border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            height: 280px;
+            overflow-y: auto;
             padding: 20px;
-            border-radius: 15px;
-            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            scroll-behavior: smooth;
         }
 
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--genshin-gold);
-            font-family: 'Cinzel', serif;
+        .chat-msg {
+            max-width: 80%;
+            padding: 12px 18px;
+            border-radius: 14px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            animation: fadeIn 0.3s ease;
         }
 
-        .stat-label {
-            font-size: 0.9rem;
-            color: #a0aec0;
-            text-transform: uppercase;
+        .chat-msg.paimon {
+            background: rgba(157, 78, 221, 0.25);
+            border: 1px solid var(--genshin-purple);
+            align-self: flex-start;
+            border-top-left-radius: 4px;
         }
 
-        /* Dilek Sandığı / Sürpriz Kutuları */
-        .chest-container {
+        .chat-msg.user {
+            background: rgba(0, 255, 204, 0.2);
+            border: 1px solid var(--genshin-cyan);
+            align-self: flex-end;
+            border-top-right-radius: 4px;
+        }
+
+        .chat-input-area {
+            display: flex;
+            gap: 12px;
+        }
+
+        .chat-input {
+            flex: 1;
+            background: rgba(5, 10, 22, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 14px 20px;
+            border-radius: 30px;
+            color: #fff;
+            outline: none;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .chat-input:focus {
+            border-color: var(--genshin-cyan);
+            box-shadow: 0 0 10px rgba(0, 255, 204, 0.2);
+        }
+
+        .chat-btn {
+            background: linear-gradient(45deg, var(--genshin-cyan), var(--genshin-purple));
+            color: var(--genshin-bg);
+            border: none;
+            padding: 0 25px;
+            border-radius: 30px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .chat-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(0, 255, 204, 0.5);
+        }
+
+        /* --- SÜRPRİZ SANDIKLAR --- */
+        .chest-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-            margin-top: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+            margin-top: 10px;
         }
 
         .chest-card {
-            background: rgba(15, 23, 42, 0.9);
+            background: rgba(15, 23, 42, 0.8);
             border: 2px solid rgba(255, 204, 0, 0.4);
-            border-radius: 15px;
+            border-radius: 18px;
             padding: 25px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.4s ease;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
         }
 
         .chest-card:hover {
             border-color: var(--genshin-gold);
-            box-shadow: 0 0 25px rgba(255, 204, 0, 0.4);
-            transform: scale(1.03);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 10px 25px rgba(255, 204, 0, 0.3);
         }
 
         .chest-card i {
             font-size: 3rem;
             color: var(--genshin-gold);
             margin-bottom: 15px;
+            transition: transform 0.3s;
+        }
+
+        .chest-card:hover i {
+            transform: scale(1.2) rotate(10deg);
         }
 
         .chest-card h3 {
@@ -236,53 +327,24 @@
         }
 
         .chest-card p {
-            color: #a0aec0;
-            font-size: 0.95rem;
+            color: #94a3b8;
+            font-size: 0.9rem;
             display: none;
+        }
+
+        .chest-card.opened {
+            background: rgba(30, 41, 59, 0.95);
+            border-color: var(--genshin-cyan);
         }
 
         .chest-card.opened p {
             display: block;
             animation: fadeIn 0.5s ease;
+            color: #e2e8f0;
         }
 
         .chest-card.opened i {
-            color: var(--primary-glow);
-        }
-
-        /* Karakter Sözleri / Dilek Kutusu */
-        .wish-box {
-            background: linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,27,75,0.9));
-            border-radius: 15px;
-            padding: 30px;
-            border: 1px solid var(--secondary-glow);
-            text-align: center;
-        }
-
-        .wish-quote {
-            font-style: italic;
-            font-size: 1.15rem;
-            line-height: 1.8;
-            color: #e2e8f0;
-            margin-bottom: 20px;
-        }
-
-        .interactive-btn {
-            background: linear-gradient(45deg, var(--primary-glow), var(--secondary-glow));
-            color: var(--bg-dark);
-            border: none;
-            padding: 12px 30px;
-            font-weight: 700;
-            font-size: 1rem;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 20px rgba(0, 255, 204, 0.4);
-        }
-
-        .interactive-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 30px rgba(0, 255, 204, 0.8);
+            color: var(--genshin-cyan);
         }
 
         /* Animasyonlar */
@@ -292,14 +354,13 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Footer */
         footer {
             text-align: center;
-            padding: 20px;
+            padding: 30px;
             color: #64748b;
             font-size: 0.9rem;
             position: relative;
@@ -307,26 +368,34 @@
         }
 
         footer span {
-            color: var(--primary-glow);
+            color: var(--genshin-cyan);
         }
 
-        /* Responsive */
+        /* Mobil Uyum */
         @media (max-width: 768px) {
-            h1 { font-size: 2.3rem; }
-            .section-card { padding: 20px; }
+            h1 { font-size: 2.2rem; }
+            .glass-card { padding: 20px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Arka Plan Parçacık ve Efekt Motoru -->
+    <!-- Arka Plan Dinamik Parçacık Canvası -->
     <canvas id="bg-canvas"></canvas>
+
+    <!-- Süzülen Anime/Genshin Karakter Silüet Alanı -->
+    <div class="floating-characters">
+        <div class="char-element char-1"></div>
+        <div class="char-element char-2"></div>
+    </div>
+
     <div class="overlay-gradient"></div>
 
-    <!-- Müzik Çalar (Teyvat OST Hissi) -->
-    <div class="music-control" id="musicToggle" title="Müziği Aç/Kapat">
+    <!-- Müzik Kontrol Butonu -->
+    <div class="music-control" id="musicToggle" title="Müziği Aç / Kapat">
         <i class="fa-solid fa-music"></i>
     </div>
+    <!-- Gerçekçi Teyvat Atmosfer Melodisi -->
     <audio id="bgMusic" loop>
         <source src="https://assets.mixkit.co/music/preview/mixkit-magical-fairy-tale-683.mp3" type="audio/mp3">
     </audio>
@@ -334,81 +403,79 @@
     <div class="container">
         <!-- Başlık -->
         <header>
-            <div class="vision-badge">
-                <i class="fa-solid fa-gem"></i> Anemo & Cryo Vision Sahibi
+            <div class="vision-tag">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> Element: Mutluluk & Neşe
             </div>
             <h1>İyi ki Doğdun, Melisa!</h1>
-            <p class="subtitle">Teyvat Kıtasının En Tatlı Gezgini</p>
+            <p class="subtitle">Teyvat Kıtasının En Özel Gezgini</p>
         </header>
 
-        <!-- Bölüm 1: Özel Mesaj -->
-        <section class="section-card">
-            <h2><i class="fa-solid fa-scroll"></i> Paimon'un Özel Notu</h2>
-            <p style="line-height: 1.8; color: #cbd5e1; font-size: 1.1rem;">
-                Hey Melisa! Bugün Teyvat'taki tüm Archonlar senin için toplandı ve en büyük dileklerini gerçekleştirmek üzere güçlerini birleştirdiler. Karşına çıkan tüm zorlukları birer Domain'i tamamlar gibi kolayca aşman, hayatının her anının bolca Primogem ve mutluluk dolu olması dileğiyle! Doğum günün kutlu olsun!
+        <!-- BÖLÜM 1: YAPAY ZEKA SOHBET SİMÜLATÖRÜ (AI Gibi Konuşabilen Paimon) -->
+        <section class="glass-card">
+            <h2><i class="fa-solid fa-robot"></i> Paimon AI Asistanı ile Sohbet Et</h2>
+            <p style="color: #94a3b8; margin-bottom: 15px; font-size: 0.95rem;">
+                Paimon'a doğum günü hakkında soru sorabilir ya da onunla sohbet edebilirsin! (Örn: "Benim için ne hazırladın?")
             </p>
+            <div class="ai-chat-container">
+                <div class="chat-box" id="chatBox">
+                    <div class="chat-msg paimon">
+                        Hey orada, Gezgin Melisa! Ben Paimon AI! Bugün senin doğum günün ve Teyvat'ın en lezzetli yemeklerini senin için hazır tutuyorum. Bana bir şeyler yazmak ister misin?
+                    </div>
+                </div>
+                <div class="chat-input-area">
+                    <input type="text" id="userInput" class="chat-input" placeholder="Paimon'a bir şeyler yaz..." autocomplete="off">
+                    <button class="chat-btn" onclick="sendMessage()"><i class="fa-solid fa-paper-plane"></i> Gönder</button>
+                </div>
+            </div>
         </section>
 
-        <!-- Bölüm 2: Sürpriz Sandıklar -->
-        <section class="section-card">
-            <h2><i class="fa-solid fa-box-open"></i> Özel Ödül Sandıkları</h2>
-            <p style="color: #94a3b8; margin-bottom: 20px;">Sandıklardan birini aç ve sürpriz mesajını gör, Gezgin!</p>
+        <!-- BÖLÜM 2: ÖZEL SÜRPRİZ SANDIKLARI -->
+        <section class="glass-card">
+            <h2><i class="fa-solid fa-box-open"></i> Doğum Günü Ödül Sandıkları</h2>
+            <p style="color: #94a3b8; margin-bottom: 20px;">Sandıklardan birini aç ve Archonların Melisa için gönderdiği gizli sürprizi keşfet!</p>
             
-            <div class="chest-container">
-                <div class="chest-card" onclick="openChest(this, 'Gönlünün efendisi tüm bannerlarda her zaman ilk 10\'luda istediğin karakteri çıkarsın!')">
+            <div class="chest-grid">
+                <div class="chest-card" onclick="openChest(this, 'Şansın hep yaver gitsin! İstediğin 5 yıldızlı karakter her zaman ilk 10\'luda gelsin!')">
                     <i class="fa-solid fa-chest"></i>
-                    <h3>1. Sandık: Dilek Şansı</h3>
-                    <p>Ödül yükleniyor...</p>
+                    <h3>1. Lüks Sandık</h3>
+                    <p>Ödül açılıyor...</p>
                 </div>
-                <div class="chest-card" onclick="openChest(this, 'Hayatındaki tüm resinlerin (enerjin) daima dolu ve enerjik olsun!')">
+                <div class="chest-card" onclick="openChest(this, 'Hayatındaki tüm enerji barların daima full ve hayatın harika maceralarla dolu olsun!')">
                     <i class="fa-solid fa-bolt"></i>
-                    <h3>2. Sandık: Sonsuz Enerji</h3>
-                    <p>Ödül yükleniyor...</p>
+                    <h3>2. Değerli Sandık</h3>
+                    <p>Ödül açılıyor...</p>
                 </div>
-                <div class="chest-card" onclick="openChest(this, 'Yüzündeki o muazzam gülümseme Teyvat\'ın gökyüzündeki yıldızlardan bile daha parlak olsun!')">
+                <div class="chest-card" onclick="openChest(this, 'Yüzündeki o enfes gülümseme Teyvat\'ın tüm yıldızlarından daha parlak parlasın!')">
                     <i class="fa-solid fa-star"></i>
-                    <h3>3. Sandık: Yıldız Tozu</h3>
-                    <p>Ödül yükleniyor...</p>
+                    <h3>3. Muhteşem Sandık</h3>
+                    <p>Ödül açılıyor...</p>
                 </div>
             </div>
         </section>
 
-        <!-- Bölüm 3: Karakter Dilek Duvarı -->
-        <section class="section-card">
-            <h2><i class="fa-solid fa-comment-dots"></i> Archonların Kutlama Mesajı</h2>
-            <div class="wish-box">
-                <p class="wish-quote" id="quoteText">"Yıldızlar bugün senin doğum gününü kutlamak için gökyüzünde kusursuz bir hizaya geldi, Melisa."</p>
-                <button class="interactive-btn" onclick="changeQuote()">Yeni Bir Mesaj Çek</button>
-            </div>
-        </section>
-
-        <!-- Bölüm 4: İstatistikler -->
-        <section class="section-card">
-            <h2><i class="fa-solid fa-chart-line"></i> Melisa'nın Macerası</h2>
-            <div class="stats-grid">
-                <div class="stat-box">
-                    <div class="stat-number">999+</div>
-                    <div class="stat-label">Mutlu Gün</div>
+        <!-- BÖLÜM 3: ÖZEL KUTLAMA DUVARI -->
+        <section class="glass-card">
+            <h2><i class="fa-solid fa-scroll"></i> Gezginin Statları</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; text-align: center; margin-top: 15px;">
+                <div style="background: rgba(5,10,22,0.6); padding: 20px; border-radius: 15px; border: 1px solid rgba(0,255,204,0.2);">
+                    <div style="font-size: 2rem; font-weight: 800; color: var(--genshin-cyan); font-family: 'Cinzel', serif;">999+</div>
+                    <div style="color: #94a3b8; font-size: 0.9rem; margin-top: 5px;">Mutluluk Puanı</div>
                 </div>
-                <div class="stat-box">
-                    <div class="stat-number">∞</div>
-                    <div class="stat-label">Primogem Değeri</div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-number">100%</div>
-                    <div class="stat-label">Güzellik Oranı</div>
+                <div style="background: rgba(5,10,22,0.6); padding: 20px; border-radius: 15px; border: 1px solid rgba(255,204,0,0.2);">
+                    <div style="font-size: 2rem; font-weight: 800; color: var(--genshin-gold); font-family: 'Cinzel', serif;">100%</div>
+                    <div style="color: #94a3b8; font-size: 0.9rem; margin-top: 5px;">Kraliçe Statüsü</div>
                 </div>
             </div>
         </section>
     </div>
 
     <footer>
-        <p>Tasarım & Kodlama: Melisa için özel olarak üretilmiştir. | <span>Genshin Impact Theme</span></p>
+        <p>Tasarım ve Kodlama: Melisa'ya Özel Genshin Impact Temalı Yapay Zeka Deneyimi | <span>Tüm Hakları Saklıdır</span></p>
     </footer>
 
-    <!-- JavaScript Motoru -->
+    <!-- JavaScript Animasyon ve AI Motoru -->
     <script>
-        // Arka Plan Parçacık (Canvas) Efekti
+        // Arka Plan Parçacık (Canvas Element) Motoru
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
 
@@ -420,14 +487,13 @@
             height = canvas.height = window.innerHeight;
         });
 
-        // Parçacık Sınıfı (Yıldız / Element Parçacıkları)
         class Particle {
             constructor() {
                 this.x = Math.random() * width;
                 this.y = Math.random() * height;
-                this.size = Math.random() * 2.5 + 1;
-                this.speedX = (Math.random() - 0.5) * 0.8;
-                this.speedY = (Math.random() - 0.5) * 0.8;
+                this.size = Math.random() * 3 + 1;
+                this.speedX = (Math.random() - 0.5) * 0.6;
+                this.speedY = (Math.random() - 0.5) * 0.6;
                 this.color = Math.random() > 0.5 ? '#00ffcc' : '#ffcc00';
                 this.alpha = Math.random();
             }
@@ -453,17 +519,17 @@
             }
         }
 
-        const particles = Array.from({ length: 120 }, () => new Particle());
+        const particles = Array.from({ length: 100 }, () => new Particle());
 
-        function animate() {
+        function animateParticles() {
             ctx.clearRect(0, 0, width, height);
             particles.forEach(p => {
                 p.update();
                 p.draw();
             });
-            requestAnimationFrame(animate);
+            requestAnimationFrame(animateParticles);
         }
-        animate();
+        animateParticles();
 
         // Müzik Kontrolü
         const musicToggle = document.getElementById('musicToggle');
@@ -474,43 +540,65 @@
             if (isPlaying) {
                 bgMusic.pause();
                 musicToggle.innerHTML = '<i class="fa-solid fa-music"></i>';
-                musicToggle.style.borderColor = 'var(--primary-glow)';
+                musicToggle.style.borderColor = 'var(--genshin-cyan)';
             } else {
-                bgMusic.play().catch(e => console.log("Tarayıcı otomatik oynatmayı engelledi."));
+                bgMusic.play().catch(e => console.log("Otomatik oynatma kısıtlaması."));
                 musicToggle.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
                 musicToggle.style.borderColor = 'var(--genshin-gold)';
             }
             isPlaying = !isPlaying;
         });
 
-        // Sandık Açma Fonksiyonu
-        function openChest(element, message) {
+        // Sandık Açma Mantığı
+        function openChest(element, text) {
             if (!element.classList.contains('opened')) {
                 element.classList.add('opened');
-                const p = element.querySelector('p');
-                p.textContent = message;
-                const icon = element.querySelector('i');
-                icon.className = "fa-solid fa-box-open";
+                element.querySelector('p').textContent = text;
+                element.querySelector('i').className = "fa-solid fa-box-open";
             }
         }
 
-        // Rastgele Archon Sözleri
-        const quotes = [
-            "Yıldızlar bugün senin doğum gününü kutlamak için gökyüzünde kusursuz bir hizaya geldi, Melisa.",
-            "Teyvat'ın en kudretli savaşçısı bile senin bu gülen gözlerin karşısında büyülenir!",
-            "Hayatındaki her yeni macera, en nadide 5 yıldızlı eşya kadar değerli olsun.",
-            "Rüzgarın yönü hep senin mutluluğuna doğru essin, iyi ki varsın Gezgin!"
+        // Paimon AI Sohbet Mantığı (Etkileşimli Yapay Zeka Simülasyonu)
+        const chatBox = document.getElementById('chatBox');
+        const userInput = document.getElementById('userInput');
+
+        const paimonReplies = [
+            "Vay canına Melisa! Doğum gününde seninle Teyvat'ı gezmek harika olurdu!",
+            "Paimon senin için en lezzetli tavuk bifteğini hazırladı, ama önce iyi ki doğdun demeliyiz!",
+            "Gezgin, bugün kuralları boş ver ve sadece eğlenmene bak! Doğum günün kutlu olsun!",
+            "Archonlar bile bugün senin şerefine kadeh kaldırıyor Melisa, farkında mısın?",
+            "Bana ist насос (Primogem) ısmarlayacak mısın yoksa sadece kutlama mı yapacağız? Şaka şaka, iyi ki varsın!"
         ];
 
-        function changeQuote() {
-            const quoteText = document.getElementById('quoteText');
-            let randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
-            quoteText.style.opacity = 0;
+        function sendMessage() {
+            const text = userInput.value.trim();
+            if (!text) return;
+
+            // Kullanıcı Mesajı Ekle
+            const userMsg = document.createElement('div');
+            userMsg.className = 'chat-msg user';
+            userMsg.textContent = text;
+            chatBox.appendChild(userMsg);
+
+            userInput.value = '';
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            // AI (Paimon) Yanıtı Gecikmeli Efekt (Yapay Zeka Hissi)
             setTimeout(() => {
-                quoteText.textContent = `"${randomQuote}"`;
-                quoteText.style.opacity = 1;
-            }, 200);
+                const aiMsg = document.createElement('div');
+                aiMsg.className = 'chat-msg paimon';
+                const randomReply = paimonReplies[Math.floor(Math.random() * paimonReplies.length)];
+                aiMsg.textContent = randomReply;
+                chatBox.appendChild(aiMsg);
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }, 800);
         }
+
+        userInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
     </script>
 </body>
 </html>
