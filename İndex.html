@@ -3,585 +3,239 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>İyi ki Doğdun Melisa! 🌸 | Özel Sürpriz Deneyimi</title>
+    <title>İyi ki Doğdun, Melisa | Özel An</title>
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@1,600&display=swap" rel="stylesheet">
-    <!-- Canvas Confetti Kütüphanesi -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Cinzel:wght@600&display=swap" rel="stylesheet">
+    <!-- Canvas Confetti -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <style>
-        /* ==========================================================================
-           1. CSS RESET & GLOBAL DEĞİŞKENLER
-           ================================================================          */
-        *, *::before, *::after {
+        :root {
+            --bg-deep: #0a0a0f;
+            --surface: rgba(20, 20, 30, 0.6);
+            --border: rgba(255, 255, 255, 0.07);
+            --primary: #f43f5e;
+            --primary-glow: rgba(244, 63, 94, 0.3);
+            --accent: #fbbf24;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        :root {
-            --bg-color: #050508;
-            --panel-bg: rgba(16, 16, 26, 0.75);
-            --border-color: rgba(255, 255, 255, 0.08);
-            --primary-pink: #ff6584;
-            --light-pink: #ff8fab;
-            --accent-yellow: #ffd166;
-            --accent-green: #06d6a0;
-            --text-main: #f0f0f5;
-            --text-muted: #9494ab;
-            --shadow-glow: rgba(255, 101, 132, 0.25);
-        }
-
-        html, body {
-            width: 100%;
-            min-height: 100vh;
-            background-color: var(--bg-color);
+        body {
+            background-color: var(--bg-deep);
             color: var(--text-main);
-            font-family: 'Outfit', sans-serif;
-            overflow-x: hidden;
+            font-family: 'Plus Jakarta+Sans', sans-serif;
+            min-height: 100vh;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
+            overflow-x: hidden;
             position: relative;
         }
 
-        /* ==========================================================================
-           2. ARKA PLAN EFEKTLERİ VE PARILTI KANALLARI
-           ================================================================          */
-        .ambient-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        .ambient-glow-1 {
-            position: absolute;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(255, 101, 132, 0.15) 0%, rgba(5, 5, 8, 0) 70%);
-            top: 10%;
-            left: 15%;
-            border-radius: 50%;
-            z-index: 1;
-            pointer-events: none;
-            animation: floatGlowOne 10s ease-in-out infinite alternate;
-        }
-
-        .ambient-glow-2 {
+        /* Arka Plan Atmosferik Işıklar */
+        .ambient-light {
             position: absolute;
             width: 500px;
             height: 500px;
-            background: radial-gradient(circle, rgba(255, 209, 102, 0.1) 0%, rgba(5, 5, 8, 0) 70%);
-            bottom: 10%;
-            right: 15%;
-            border-radius: 50%;
-            z-index: 1;
+            background: radial-gradient(circle, rgba(244, 63, 94, 0.12) 0%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 0;
             pointer-events: none;
-            animation: floatGlowTwo 12s ease-in-out infinite alternate;
+            filter: blur(60px);
         }
 
-        @keyframes floatGlowOne {
-            0% { transform: translate(-30px, -30px) scale(0.9); }
-            100% { transform: translate(40px, 40px) scale(1.2); }
-        }
-
-        @keyframes floatGlowTwo {
-            0% { transform: translate(30px, 20px) scale(1); }
-            100% { transform: translate(-40px, -30px) scale(1.3); }
-        }
-
-        /* ==========================================================================
-           3. ANA KART BİLEŞENİ (GLASSMORPHISM)
-           ================================================================          */
-        .container {
+        /* Ana Kart */
+        .experience-card {
             position: relative;
-            max-width: 680px;
             width: 90%;
-            background: var(--panel-bg);
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
-            border: 1px solid var(--border-color);
-            padding: 55px 40px;
-            border-radius: 36px;
-            box-shadow: 0 40px 90px rgba(0, 0, 0, 0.8), 0 0 50px var(--shadow-glow);
+            max-width: 560px;
+            background: var(--surface);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 48px 36px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7), 0 0 30px var(--primary-glow);
             z-index: 10;
-            animation: containerEntrance 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
             text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: cardEntrance 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        @keyframes containerEntrance {
-            0% {
-                opacity: 0;
-                transform: translateY(60px) scale(0.92);
-                filter: blur(12px);
-            }
-            100% {
+        @keyframes cardEntrance {
+            to {
                 opacity: 1;
-                transform: translateY(0) scale(1);
-                filter: blur(0);
+                transform: translateY(0);
             }
         }
 
-        /* ==========================================================================
-           4. BAŞLIK VE METİN STİLLERİ
-           ================================================================          */
-        .header-badge {
+        /* Başlık Bölümü */
+        .badge {
             display: inline-block;
-            padding: 6px 16px;
-            background: rgba(255, 101, 132, 0.1);
-            border: 1px solid rgba(255, 101, 132, 0.25);
-            border-radius: 50px;
             font-size: 0.75rem;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--primary-pink);
-            margin-bottom: 20px;
+            letter-spacing: 3px;
+            color: var(--primary);
+            margin-bottom: 16px;
             font-weight: 600;
         }
 
         h1 {
-            font-family: 'Press Start 2P', monospace;
-            font-size: 1.5rem;
-            color: var(--primary-pink);
-            margin-bottom: 22px;
-            line-height: 1.6;
-            text-shadow: 0 0 25px rgba(255, 101, 132, 0.6);
+            font-family: 'Cinzel', serif;
+            font-size: 2rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 16px;
+            color: #fff;
         }
 
-        .subtitle {
-            font-size: 1.12rem;
+        .intro-text {
+            font-size: 1.05rem;
             color: var(--text-muted);
-            margin-bottom: 35px;
-            line-height: 1.8;
+            line-height: 1.7;
+            margin-bottom: 32px;
             font-weight: 300;
         }
 
-        /* ==========================================================================
-           5. PİXEL ART ÇİÇEK MODÜLÜ VE ANİMASYONLARI
-           ================================================================          */
-        .flower-card-wrapper {
-            position: relative;
-            display: inline-block;
-            padding: 24px;
-            background: rgba(0, 0, 0, 0.45);
-            border-radius: 28px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            margin-bottom: 35px;
-            box-shadow: inset 0 0 30px rgba(0,0,0,0.8);
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .flower-card-wrapper:hover {
-            border-color: rgba(255, 101, 132, 0.3);
-            box-shadow: inset 0 0 30px rgba(0,0,0,0.8), 0 0 30px rgba(255, 101, 132, 0.15);
-        }
-
-        .flower-card-wrapper.active-animation {
-            animation: superPulseFlower 1.4s ease-in-out infinite alternate;
-            border-color: rgba(255, 209, 102, 0.6);
-            background: rgba(20, 18, 30, 0.85);
-        }
-
-        @keyframes superPulseFlower {
-            0% {
-                transform: scale(1) rotate(0deg);
-                box-shadow: inset 0 0 30px rgba(0,0,0,0.8), 0 0 25px rgba(255, 101, 132, 0.3);
-            }
-            100% {
-                transform: scale(1.12) rotate(3deg);
-                box-shadow: inset 0 0 40px rgba(0,0,0,0.8), 0 0 50px rgba(255, 209, 102, 0.7);
-            }
-        }
-
-        .pixel-flower {
-            display: inline-grid;
-            grid-template-columns: repeat(9, 16px);
-            grid-template-rows: repeat(9, 16px);
-            gap: 2px;
-        }
-
-        .pixel {
-            width: 16px;
-            height: 16px;
-            border-radius: 3px;
-            transition: transform 0.3s ease, background-color 0.3s ease;
-        }
-
-        .pixel:hover {
-            transform: scale(1.4);
-        }
-
-        /* Çiçek Renk Matrisi Sınıfları ve Işık Sızıntıları */
-        .pixel.pink {
-            background-color: var(--primary-pink);
-            box-shadow: 0 0 10px rgba(255, 101, 132, 0.8);
-        }
-        .pixel.light-pink {
-            background-color: var(--light-pink);
-            box-shadow: 0 0 8px rgba(255, 143, 171, 0.7);
-        }
-        .pixel.yellow {
-            background-color: var(--accent-yellow);
-            box-shadow: 0 0 12px rgba(255, 209, 102, 0.9);
-        }
-        .pixel.green {
-            background-color: var(--accent-green);
-            box-shadow: 0 0 10px rgba(6, 214, 160, 0.7);
-        }
-        .pixel.empty {
-            background-color: transparent;
-        }
-
-        /* ==========================================================================
-           6. ETKİLEŞİMLİ BUTON TASARIMI
-           ================================================================          */
-        .action-button-container {
-            position: relative;
-            margin-bottom: 10px;
-        }
-
-        .btn-surpriz {
-            background: linear-gradient(135deg, var(--primary-pink), var(--light-pink));
-            color: #ffffff;
+        /* Etkileşim Butonu */
+        .reveal-btn {
+            background: linear-gradient(135deg, #f43f5e, #fb7185);
+            color: white;
             border: none;
-            padding: 18px 50px;
-            font-size: 1.15rem;
-            font-weight: 700;
+            padding: 16px 36px;
+            font-size: 0.95rem;
+            font-weight: 600;
             border-radius: 50px;
             cursor: pointer;
-            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 10px 35px rgba(255, 101, 132, 0.5);
-            letter-spacing: 0.8px;
-            position: relative;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(244, 63, 94, 0.4);
+            letter-spacing: 0.5px;
+        }
+
+        .reveal-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(244, 63, 94, 0.6);
+        }
+
+        .reveal-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Açılan İçerik Bölümü */
+        .content-hidden {
+            max-height: 0;
             overflow: hidden;
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            z-index: 5;
-        }
-
-        .btn-surpriz::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transition: 0.5s;
-        }
-
-        .btn-surpriz:hover::before {
-            left: 100%;
-        }
-
-        .btn-surpriz:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 18px 45px rgba(255, 101, 132, 0.75);
-            background: linear-gradient(135deg, #ff476d, #ff7597);
-        }
-
-        .btn-surpriz:active {
-            transform: translateY(1px) scale(0.98);
-        }
-
-        /* ==========================================================================
-           7. ŞOK EDİCİ MESAJ ALANI VE DAKTİLO EFEKTİ
-           ================================================================          */
-        #message-box {
-            margin-top: 35px;
-            font-size: 1.2rem;
-            color: var(--accent-yellow);
-            display: none;
-            padding: 30px;
-            background: rgba(255, 209, 102, 0.05);
-            border: 1px solid rgba(255, 209, 102, 0.3);
-            border-radius: 24px;
-            line-height: 1.9;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
-            transform: scale(0.85);
             opacity: 0;
-            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .content-hidden.active {
+            max-height: 400px;
+            opacity: 1;
+            margin-top: 32px;
+        }
+
+        .message-box {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            padding: 24px;
             text-align: left;
             position: relative;
         }
 
-        #message-box.show {
-            display: block;
-            transform: scale(1);
-            opacity: 1;
+        .message-box p {
+            font-size: 1rem;
+            color: #e2e8f0;
+            line-height: 1.8;
+            font-weight: 300;
         }
 
-        .message-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 15px;
-            font-family: 'Press Start 2P', monospace;
-            font-size: 0.85rem;
-            color: var(--primary-pink);
-        }
-
-        #typedText {
-            font-weight: 400;
-            color: #f7f7fc;
-            display: block;
-            min-height: 80px;
-        }
-
-        /* ==========================================================================
-           8. ALT BİLGİ VE İMZA
-           ================================================================          */
-        .footer-signature {
-            margin-top: 40px;
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            letter-spacing: 3px;
+        /* Alt Bilgi */
+        .footer-note {
+            margin-top: 36px;
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.3);
+            letter-spacing: 2px;
             text-transform: uppercase;
-            border-top: 1px solid var(--border-color);
-            padding-top: 20px;
         }
 
-        /* ==========================================================================
-           9. RESPONSIVE (MOBİL) UYUMLULUK
-           ================================================================          */
-        @media (max-width: 768px) {
-            .container {
-                padding: 35px 20px;
-                width: 94%;
-                border-radius: 28px;
+        @media (max-width: 600px) {
+            .experience-card {
+                padding: 36px 20px;
+                width: 92%;
             }
-
             h1 {
-                font-size: 1.15rem;
-            }
-
-            .subtitle {
-                font-size: 1rem;
-            }
-
-            .pixel-flower {
-                grid-template-columns: repeat(9, 13px);
-                grid-template-rows: repeat(9, 13px);
-                gap: 2px;
-            }
-
-            .pixel {
-                width: 13px;
-                height: 13px;
-            }
-
-            .btn-surpriz {
-                padding: 15px 35px;
-                font-size: 1.05rem;
-                width: 100%;
-                justify-content: center;
-            }
-
-            #message-box {
-                padding: 20px;
-                font-size: 1.05rem;
+                font-size: 1.6rem;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- Arka Plan Işık Baloncukları -->
-    <div class="ambient-glow-1"></div>
-    <div class="ambient-glow-2"></div>
+    <div class="ambient-light"></div>
 
-    <!-- Dinamik Yıldız Efekti İçin Kanvas -->
-    <canvas class="ambient-canvas" id="particleCanvas"></canvas>
-
-    <!-- Ana Kart -->
-    <main class="container">
-        <div class="header-badge">✦ Özel Doğum Günü Deneyimi ✦</div>
+    <main class="experience-card">
+        <div class="badge">Özel Gün</div>
+        <h1>İyi ki Doğdun, Melisa</h1>
+        <p class="intro-text">Hayatın boyunca karşına çıkacak tüm güzelliklerin başlangıcı olan bu özel günde, senin için küçük ama anlamlı bir alan bıraktım.</p>
         
-        <h1>İyi ki Doğdun<br>Melisa! 🌸</h1>
-        
-        <p class="subtitle">
-            Yeni yaşının sana hayatın boyunca unutamayacağın kadar büyük mutluluklar, huzur ve rüyalarındaki tüm güzellikleri getirmesi dileğiyle...
-        </p>
+        <button class="reveal-btn" id="mainBtn" onclick="revealSurprise()">Sürprizi Keşfet</button>
 
-        <!-- Profesyonel Pixel Art Çiçek Modülü -->
-        <div class="flower-card-wrapper" id="flowerCard">
-            <div class="pixel-flower">
-                <!-- Satır 1 -->
-                <div class="pixel empty"></div><div class="pixel empty"></div><div class="pixel pink"></div><div class="pixel light-pink"></div><div class="pixel pink"></div><div class="pixel empty"></div><div class="pixel empty"></div><div class="pixel empty"></div><div class="pixel empty"></div>
-                <!-- Satır 2 -->
-                <div class="pixel empty"></div><div class="pixel pink"></div><div class="pixel light-pink"></div><div class="pixel yellow"></div><div class="pixel light-pink"></div><div class="pixel pink"></div><div class="pixel empty"></div><div class="pixel empty"></div><div class="pixel empty"></div>
-                <!-- Satır 3 -->
-                <div class="pixel pink"></div><div class="pixel light-pink"></div><div class="pixel yellow"></div><div class="pixel yellow"></div><div class="pixel yellow"></div><div class="pixel light-pink"></div><div class="pixel pink"></div><div class="pixel empty"></div><div class="pixel empty"></div>
-                <!-- Satır 4 -->
-                <div class="pixel light-pink"></div><div class="pixel yellow"></div><div class="pixel yellow"></div><div class="pixel yellow"></div><div class="pixel yellow"></div><div class="pixel yellow"></div><div class="pixel light-pink"></div><div class="pixel empty"></div><div class="pixel empty"></div>
-                <!-- Satır 5 -->
-                <div class="pixel pink"></div><div class="pixel light-pink"></div><div class="pixel yellow"></div><div class="pixel yellow"></div><div class="pixel yellow"></div><div class="pixel light-pink"></div><div class="pixel pink"></div><div class="pixel empty"></div><div class="pixel empty"></div>
-                <!-- Satır 6 -->
-                <div class="pixel empty"></div><div class="pixel pink"></div><div class="pixel light-pink"></div><div class="pixel yellow"></div><div class="pixel light-pink"></div><div class="pixel pink"></div><div class="pixel empty"></div><div class="pixel empty"></div><div class="pixel empty"></div>
-                <!-- Satır 7 -->
-                <div class="pixel empty"></div><div class="pixel empty"></div><div class="pixel pink"></div><div class="pixel light-pink"></div><div class="pixel pink"></div><div class="pixel empty"></div><div class="pixel green"></div><div class="pixel green"></div><div class="pixel empty"></div>
-                <!-- Satır 8 -->
-                <div class="pixel empty"></div><div class="pixel empty"></div><div class="pixel empty"></div><div class="pixel green"></div><div class="pixel empty"></div><div class="pixel green"></div><div class="pixel green"></div><div class="pixel empty"></div><div class="pixel empty"></div>
-                <!-- Satır 9 -->
-                <div class="pixel empty"></div><div class="pixel empty"></div><div class="pixel empty"></div><div class="pixel green"></div><div class="pixel green"></div><div class="pixel empty"></div><div class="pixel empty"></div><div class="pixel empty"></div><div class="pixel empty"></div>
+        <div class="content-hidden" id="surpriseContent">
+            <div class="message-box">
+                <p id="typedMessage"></p>
             </div>
         </div>
 
-        <!-- Etkileşim Butonu -->
-        <div class="action-button-container">
-            <button class="btn-surpriz" id="surprizBtn" onclick="tetikleProfesyonelSurpriz()">
-                <span>Sürprizi Aç</span>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </button>
-        </div>
-
-        <!-- Şok Edici & Akıcı Daktilo Mesaj Kutusu -->
-        <div id="message-box">
-            <div class="message-header">
-                <span>✨ ÖZEL KUTLAMA NOTU</span>
-            </div>
-            <div id="typedText"></div>
-        </div>
-
-        <div class="footer-signature">Kişiye Özel Profesyonel Web Deneyimi</div>
+        <div class="footer-note">Kişiye Özel Tasarım</div>
     </main>
 
-    <!-- ==========================================================================
-       10. GELİŞMİŞ JAVASCRIPT MOTORU VE ANİMASYON SİSTEMİ
-       ================================================================          -->
     <script>
-        /* A. Arka Plan Hareketli Parçacık (Yıldız) Sistemi */
-        const canvas = document.getElementById('particleCanvas');
-        const ctx = canvas.getContext('2d');
-
-        let width = canvas.width = window.innerWidth;
-        let height = canvas.height = window.innerHeight;
-
-        window.addEventListener('resize', () => {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-        });
-
-        const particles = [];
-        const particleCount = 45;
-
-        for (let i = 0; i < particleCount; i++) {
-            particles.push({
-                x: Math.random() * width,
-                y: Math.random() * height,
-                radius: Math.random() * 1.8 + 0.5,
-                color: Math.random() > 0.5 ? 'rgba(255, 101, 132, ' : 'rgba(255, 209, 102, ',
-                alpha: Math.random() * 0.7 + 0.2,
-                speed: Math.random() * 0.3 + 0.1,
-                pulse: Math.random() * 0.02 + 0.01
-            });
-        }
-
-        function animateParticles() {
-            ctx.clearRect(0, 0, width, height);
-
-            particles.forEach(p => {
-                p.y -= p.speed;
-                p.alpha += Math.sin(Date.now() * p.pulse) * 0.008;
-
-                if (p.y < 0) {
-                    p.y = height;
-                    p.x = Math.random() * width;
-                }
-
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                ctx.fillStyle = p.color + Math.max(0.1, Math.min(1, p.alpha)) + ')';
-                ctx.shadowBlur = 8;
-                ctx.shadowColor = p.color + '0.8)';
-                ctx.fill();
-            });
-
-            requestAnimationFrame(animateParticles);
-        }
-        animateParticles();
-
-        /* B. Sürpriz Tetikleyici ve Sinematik Efektler */
-        function tetikleProfesyonelSurpriz() {
-            const btn = document.getElementById('surprizBtn');
-            btn.style.transform = 'scale(0.94)';
-            btn.style.opacity = '0.6';
+        const messageText = "Yüzündeki o samimi ve güzel gülümsemenin hayatın boyunca hiç solmamasını dilerim. Hedeflerine ulaştığın, huzur dolu ve unutulmaz anlarla dolu harika bir yaş senin olsun. İyi ki varsın.";
+        
+        function revealSurprise() {
+            const btn = document.getElementById('mainBtn');
+            const content = document.getElementById('surpriseContent');
+            
+            // Butonu yumuşakça devre dışı bırak
+            btn.style.opacity = '0.5';
             btn.style.pointerEvents = 'none';
-            btn.innerHTML = '<span>Büyü Başlıyor... ✨</span>';
+            btn.innerText = 'Kutlu Olsun';
 
-            // Çiçeği şok rezonansına sok
-            document.getElementById('flowerCard').classList.add('active-animation');
+            // İçeriği aç
+            content.classList.add('active');
 
-            // Mesaj kutusunu göster ve daktilo efektini tetikle
-            const msgBox = document.getElementById('message-box');
-            msgBox.style.display = 'block';
-            setTimeout(() => {
-                msgBox.classList.add('show');
-                baslatDaktiloMotoru();
-            }, 300);
+            // Daktilo efektini başlat
+            let i = 0;
+            const target = document.getElementById('typedMessage');
+            target.innerHTML = "";
 
-            // Gelişmiş Çok Aşamalı Havai Fişek & Konfeti Şöleni
-            sinematikHavaiFisekSoleniniBaslat();
-        }
-
-        /* C. Daktilo Efekti Motoru */
-        function baslatDaktiloMotoru() {
-            const metin = "Şok mu oldun Melisa? :) Hayatının her anında yüzündeki o harika gülümseme hiç solmasın. Hedeflerine, hayallerine ulaştığın, masallar gibi kusursuz ve neşe dolu harika bir yaş dilerim! İyi ki varsın! 🎂🎈";
-            let index = 0;
-            const yazimHizi = 32; // Milisaniye cinsinden karakter gecikmesi
-            const hedefElement = document.getElementById('typedText');
-            hedefElement.innerHTML = "";
-
-            function karakterEkle() {
-                if (index < metin.length) {
-                    hedefElement.innerHTML += metin.charAt(index);
-                    index++;
-                    setTimeout(karakterEkle, yazimHizi);
+            function typeWriter() {
+                if (i < messageText.length) {
+                    target.innerHTML += messageText.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 35);
                 }
             }
-            karakterEkle();
-        }
+            typeWriter();
 
-        /* D. Havai Fişek ve Konfeti Orkestrasyonu */
-        function sinematikHavaiFisekSoleniniBaslat() {
-            // İlk devasa patlama
+            // Şık, boğucu olmayan profesyonel konfeti patlaması
             confetti({
-                particleCount: 160,
-                spread: 120,
-                origin: { y: 0.6 },
-                colors: ['#ff6584', '#ffd166', '#06d6a0', '#ff8fab', '#ffffff']
+                particleCount: 80,
+                spread: 70,
+                origin: { y: 0.7 },
+                colors: ['#f43f5e', '#fbbf24', '#ffffff', '#fda4af']
             });
-
-            // 5 saniye boyunca süren sürekli sağ-sol fırtınası
-            var sure = 5 * 1000;
-            var bitisZamani = Date.now() + sure;
-
-            var intervalID = setInterval(function() {
-                var kalanZaman = bitisZamani - Date.now();
-                if (kalanZaman <= 0) {
-                    return clearInterval(intervalID);
-                }
-
-                confetti({
-                    particleCount: 4,
-                    angle: 60,
-                    spread: 60,
-                    origin: { x: 0, y: 0.75 },
-                    colors: ['#ff6584', '#ffd166', '#06d6a0', '#ff8fab']
-                });
-                confetti({
-                    particleCount: 4,
-                    angle: 120,
-                    spread: 60,
-                    origin: { x: 1, y: 0.75 },
-                    colors: ['#ff6584', '#ffd166', '#06d6a0', '#ff8fab']
-                });
-            }, 200);
         }
     </script>
 </body>
