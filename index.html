@@ -67,31 +67,29 @@
             100% { transform: translateY(-250px); }
         }
 
-        /* Ana Konteyner */
-        .container {
-            max-width: 1300px;
-            margin: 0 auto;
-            padding: 20px;
+        /* Üst Sabit Navigasyon Çubuğu (Fixed Header & Tabs) */
+        .sticky-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(27, 22, 38, 0.85);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--genshin-border);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            padding: 10px 20px;
             display: flex;
-            flex-direction: column;
-            gap: 25px;
+            justify-content: center;
         }
 
-        /* Üst Menü / Navigasyon Sekmeleri */
         .nav-tabs {
             display: flex;
             justify-content: center;
-            gap: 12px;
+            gap: 10px;
             flex-wrap: wrap;
-            background: rgba(25, 20, 35, 0.8);
-            padding: 12px 20px;
-            border-radius: 50px;
-            border: 1px solid var(--genshin-border);
-            backdrop-filter: blur(12px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            position: sticky;
-            top: 15px;
-            z-index: 100;
+            max-width: 1300px;
+            width: 100%;
         }
 
         .tab-btn {
@@ -100,14 +98,14 @@
             color: #d8b4e2;
             font-family: 'Poppins', sans-serif;
             font-weight: 500;
-            padding: 8px 18px;
+            padding: 8px 16px;
             border-radius: 30px;
             cursor: pointer;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
             gap: 8px;
-            font-size: 0.9rem;
+            font-size: 0.88rem;
         }
 
         .tab-btn:hover, .tab-btn.active {
@@ -117,10 +115,20 @@
             transform: translateY(-2px);
         }
 
+        /* Ana Konteyner (Sabit üst menü için üstten boşluk bırakıldı) */
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 90px 20px 30px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
         /* Header / Başlık */
         header {
             text-align: center;
-            padding: 20px 0 10px 0;
+            padding: 15px 0 10px 0;
             animation: fadeInDown 1s ease-out;
         }
 
@@ -180,6 +188,7 @@
                 grid-column: span 1;
             }
             h1 { font-size: 2.2rem; }
+            .container { padding-top: 130px; }
         }
 
         /* Ortak Kart Tasarımı */
@@ -315,6 +324,7 @@
             gap: 10px;
             margin-bottom: 15px;
             justify-content: center;
+            flex-wrap: wrap;
         }
 
         .sub-game-btn {
@@ -410,7 +420,7 @@
             border: 1px solid rgba(243, 229, 171, 0.2);
         }
 
-        /* 4. MESAJ DUVARI / ANILAR */
+        /* 4. GLOBAL CHAT & MESAJ DUVARI */
         .message-form {
             display: flex;
             flex-direction: column;
@@ -435,30 +445,51 @@
             box-shadow: 0 0 10px rgba(255, 183, 197, 0.2);
         }
 
-        .message-wall {
-            max-height: 250px;
+        .global-chat-container {
+            background: rgba(15, 10, 22, 0.75);
+            border: 1px solid rgba(255, 183, 197, 0.25);
+            border-radius: 12px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            height: 350px;
+        }
+
+        .chat-messages {
+            flex-grow: 1;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
             gap: 10px;
             padding-right: 5px;
+            margin-bottom: 12px;
         }
 
-        .msg-item {
-            background: rgba(25, 18, 35, 0.8);
-            border-left: 3px solid var(--genshin-deep-pink);
-            padding: 12px;
+        .chat-msg {
+            background: rgba(35, 25, 48, 0.9);
+            border-left: 3px solid var(--genshin-pink);
+            padding: 10px 14px;
             border-radius: 0 10px 10px 0;
             font-size: 0.9rem;
+            animation: fadeIn 0.3s ease-out;
         }
 
-        .msg-author {
+        .chat-author {
             color: var(--genshin-gold);
             font-weight: 600;
-            margin-bottom: 3px;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             display: flex;
             justify-content: space-between;
+            margin-bottom: 4px;
+        }
+
+        .chat-input-area {
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input-area input {
+            flex-grow: 1;
         }
 
         /* 5. MÜZİK / ORTAM SESİ SİMÜLATÖRÜ & SÜRPRİZLER */
@@ -540,6 +571,17 @@
     <div class="bg-layer"></div>
     <div class="stars"></div>
 
+    <!-- Üst Sabit Navigasyon Çubuğu (Sabit Sekmeler) -->
+    <div class="sticky-wrapper">
+        <div class="nav-tabs">
+            <button class="tab-btn active" onclick="switchTab('home')"><i class="fa-solid fa-house"></i> Ana Sayfa & Mektup</button>
+            <button class="tab-btn" onclick="switchTab('games')"><i class="fa-solid fa-gamepad"></i> Eğlence & Mini Oyunlar</button>
+            <button class="tab-btn" onclick="switchTab('lore')"><i class="fa-solid fa-book-open"></i> Oyun Bilgileri</button>
+            <button class="tab-btn" onclick="switchTab('messages')"><i class="fa-solid fa-comments"></i> Global Chat & Anılar</button>
+            <button class="tab-btn" onclick="switchTab('surprises')"><i class="fa-solid fa-wand-magic-sparkles"></i> Sürprizler & Sesler</button>
+        </div>
+    </div>
+
     <div class="container">
         <!-- Header -->
         <header>
@@ -549,15 +591,6 @@
             <h1>İyi ki Doğdun, Melisa!</h1>
             <p class="subtitle">Sonsuz maceralar, neşe ve unutulmaz anılarla dolu yepyeni bir yaş senin olsun.</p>
         </header>
-
-        <!-- Navigasyon Sekmeleri -->
-        <div class="nav-tabs">
-            <button class="tab-btn active" onclick="switchTab('home')"><i class="fa-solid fa-house"></i> Ana Sayfa & Mektup</button>
-            <button class="tab-btn" onclick="switchTab('games')"><i class="fa-solid fa-gamepad"></i> Eğlence & Mini Oyunlar</button>
-            <button class="tab-btn" onclick="switchTab('lore')"><i class="fa-solid fa-book-open"></i> Oyun Bilgileri & Dünyası</button>
-            <button class="tab-btn" onclick="switchTab('messages')"><i class="fa-solid fa-heart"></i> Anı & Mesaj Duvarı</button>
-            <button class="tab-btn" onclick="switchTab('surprises')"><i class="fa-solid fa-wand-magic-sparkles"></i> Sürprizler & Sesler</button>
-        </div>
 
         <!-- 1. SEKME: ANASAYFA & MEKTUP -->
         <div id="home" class="section-content active">
@@ -598,7 +631,6 @@
 
         <!-- 2. SEKME: EĞLENCE & MİNİ OYUNLAR -->
         <div id="games" class="section-content">
-            <!-- Mini Oyun Seçicisi -->
             <div class="card section-full">
                 <div class="card-title" style="justify-content: center;">
                     <i class="fa-solid fa-dice"></i> Teyvat Eğlence Merkezi
@@ -668,25 +700,29 @@
             </div>
         </div>
 
-        <!-- 4. SEKME: ANI & MESAJ DUVARI -->
+        <!-- 4. SEKME: GLOBAL CHAT & ANILAR -->
         <div id="messages" class="section-content">
             <div class="card section-full">
                 <div class="card-title">
-                    <i class="fa-solid fa-comment-dots"></i> Melisa İçin Anı ve Dilek Defteri
+                    <i class="fa-solid fa-comments"></i> Teyvat Global Canlı Sohbet & Anı Duvarı
                 </div>
-                <div class="message-form">
-                    <input type="text" id="msgAuthor" class="input-field" placeholder="İsmin / Takma adın (Örn: Paimon, Dostun...)">
-                    <textarea id="msgText" class="input-field" rows="3" placeholder="Melisa'ya kalıcı bir doğum günü mesajı bırak..."></textarea>
-                    <button class="action-btn" style="margin-top: 0; align-self: flex-start;" onclick="addMessage()">Mesajı Duvara As</button>
-                </div>
-                <div class="message-wall" id="messageWall">
-                    <div class="msg-item">
-                        <div class="msg-author"><span>Paimon</span> <span>Bugün</span></div>
-                        "Melisa, umarım hazırladığımız bu sürprizi beğenmişsindir! İyi ki varsın!"
+                <p style="color: #d8b4e2; font-size: 0.9rem; margin-bottom: 15px;">Buradan siteye giren herkes anlık olarak mesaj yazabilir, Teyvat dostlarıyla sohbet edebilir!</p>
+                
+                <div class="global-chat-container">
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="chat-msg">
+                            <div class="chat-author"><span>Paimon (Sistem)</span> <span>Az önce</span></div>
+                            "Teyvat global sohbet kanalına hoş geldiniz! Melisa için en güzel mesajları buraya yazabilirsiniz."
+                        </div>
+                        <div class="chat-msg">
+                            <div class="chat-author"><span>Seyyah</span> <span>1 dk önce</span></div>
+                            "Doğum günün kutlu olsun Melisa, site harika olmuş!"
+                        </div>
                     </div>
-                    <div class="msg-item">
-                        <div class="msg-author"><span>Gizli Hayranın</span> <span>Bugün</span></div>
-                        "Dünyanın en tatlı ve en eğlenceli gününe imza atıyorsun. Mutlu yıllar!"
+                    <div class="chat-input-area">
+                        <input type="text" id="chatAuthor" class="input-field" placeholder="Adınız..." style="max-width: 150px;">
+                        <input type="text" id="chatText" class="input-field" placeholder="Mesajınızı yazın..." onkeypress="handleChatKeyPress(event)">
+                        <button class="action-btn" style="margin-top:0; padding: 0 20px;" onclick="sendGlobalMessage()"><i class="fa-solid fa-paper-plane"></i></button>
                     </div>
                 </div>
             </div>
@@ -728,7 +764,12 @@
             document.querySelectorAll('.section-content').forEach(content => content.classList.remove('active'));
             
             document.getElementById(tabId).classList.add('active');
-            event.currentTarget.classList.add('active');
+            
+            // Tıklanan butonu bul ve active yap
+            const targetBtn = Array.from(document.querySelectorAll('.tab-btn')).find(btn => btn.getAttribute('onclick').includes(tabId));
+            if(targetBtn) targetBtn.classList.add('active');
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         // Mini Oyun Sekme Değiştirme
@@ -917,20 +958,37 @@
             loadQuiz();
         }
 
-        // --- MİMARİ/MESAJ DUVARI ---
-        function addMessage() {
-            const author = document.getElementById('msgAuthor').value.trim() || "Anonim Dost";
-            const text = document.getElementById('msgText').value.trim();
+        // --- GLOBAL CHAT SİSTEMİ ---
+        function sendGlobalMessage() {
+            const authorInput = document.getElementById('chatAuthor');
+            const textInput = document.getElementById('chatText');
+            
+            const author = authorInput.value.trim() || "Gezgin";
+            const text = textInput.value.trim();
+            
             if(!text) return;
 
-            const wall = document.getElementById('messageWall');
-            const item = document.createElement('div');
-            item.className = 'msg-item';
-            item.innerHTML = `<div class="msg-author"><span>${author}</span> <span>Şimdi</span></div>"${text}"`;
+            const chatMessages = document.getElementById('chatMessages');
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'chat-msg';
+            msgDiv.innerHTML = `
+                <div class="chat-author"><span>${escapeHtml(author)}</span> <span>Şimdi</span></div>
+                ${escapeHtml(text)}
+            `;
             
-            wall.prepend(item);
-            document.getElementById('msgText').value = '';
-            document.getElementById('msgAuthor').value = '';
+            chatMessages.appendChild(msgDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            textInput.value = '';
+        }
+
+        function handleChatKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendGlobalMessage();
+            }
+        }
+
+        function escapeHtml(str) {
+            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
         }
 
         // --- SÜRPRİZ EFEKTLERİ ---
@@ -941,7 +999,6 @@
         }
 
         function playChime() {
-            // Görsel geri bildirimli zil efekti simülasyonu
             const badge = document.querySelector('.vision-badge');
             badge.style.transform = 'scale(1.15)';
             badge.style.borderColor = '#fff';
