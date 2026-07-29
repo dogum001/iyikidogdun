@@ -13,7 +13,7 @@
             --genshin-deep-pink: #ff5c8d;
             --genshin-gold: #f3e5ab;
             --genshin-dark: #1b1626;
-            --genshin-card-bg: rgba(35, 27, 46, 0.92);
+            --genshin-card-bg: rgba(35, 27, 46, 0.94);
             --genshin-border: rgba(255, 183, 197, 0.35);
         }
 
@@ -67,14 +67,14 @@
             100% { transform: translateY(-250px); }
         }
 
-        /* Üst Sabit Navigasyon Çubuğu */
+        /* Üst Sabit Navigasyon Çubuğu (Fixed Header & Scrollable Tabs) */
         .sticky-wrapper {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             z-index: 1000;
-            background: rgba(27, 22, 38, 0.9);
+            background: rgba(27, 22, 38, 0.95);
             backdrop-filter: blur(15px);
             border-bottom: 1px solid var(--genshin-border);
             box-shadow: 0 10px 30px rgba(0,0,0,0.6);
@@ -85,11 +85,20 @@
 
         .nav-tabs {
             display: flex;
-            justify-content: center;
+            justify-content: flex-start;
             gap: 8px;
-            flex-wrap: wrap;
+            overflow-x: auto;
             max-width: 1400px;
             width: 100%;
+            padding-bottom: 4px;
+        }
+
+        .nav-tabs::-webkit-scrollbar {
+            height: 4px;
+        }
+        .nav-tabs::-webkit-scrollbar-thumb {
+            background: var(--genshin-pink);
+            border-radius: 4px;
         }
 
         .tab-btn {
@@ -106,6 +115,8 @@
             align-items: center;
             gap: 6px;
             font-size: 0.82rem;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .tab-btn:hover, .tab-btn.active {
@@ -119,7 +130,7 @@
         .container {
             max-width: 1300px;
             margin: 0 auto;
-            padding: 95px 20px 30px 20px;
+            padding: 105px 20px 30px 20px;
             display: flex;
             flex-direction: column;
             gap: 25px;
@@ -229,7 +240,7 @@
             gap: 12px;
         }
 
-        /* 1. ANASAYFA / KARAKTERLER & Mektup */
+        /* Karakter Vitrini */
         .char-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -288,7 +299,7 @@
             font-style: italic;
         }
 
-        /* 2. OYUN REHBERİ & BİLGİLERİ */
+        /* Bilgi Gridleri (Genel) */
         .info-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -320,7 +331,35 @@
             line-height: 1.5;
         }
 
-        /* 3. MİNİ OYUNLAR ALANI (11 Farklı Minigame) */
+        /* Şiirler Alanı */
+        .poem-box {
+            background: rgba(20, 15, 30, 0.8);
+            border: 1px solid rgba(255, 183, 197, 0.25);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .poem-title {
+            font-family: 'Cinzel', serif;
+            color: var(--genshin-gold);
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .poem-content {
+            font-size: 0.92rem;
+            color: #fce4ec;
+            line-height: 1.7;
+            white-space: pre-line;
+            font-style: italic;
+        }
+
+        /* Mini Oyunlar Alanı */
         .game-selector-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -384,7 +423,6 @@
             box-shadow: 0 8px 20px rgba(255, 92, 141, 0.6);
         }
 
-        /* Minigame 1: Primogem Avı */
         .game-board {
             width: 100%;
             height: 200px;
@@ -404,7 +442,6 @@
             box-shadow: 0 0 12px #76f1ff;
         }
 
-        /* Minigame 2: Gacha Çarkı */
         .gacha-result {
             font-family: 'Cinzel', serif;
             font-size: 1.1rem;
@@ -420,7 +457,6 @@
             padding: 10px;
         }
 
-        /* Diğer Minigame Ortak Öğeleri */
         .mg-input {
             background: rgba(20, 15, 30, 0.8);
             border: 1px solid var(--genshin-border);
@@ -433,7 +469,7 @@
             text-align: center;
         }
 
-        /* 4. GLOBAL CHAT & YAPIMCI KISMI */
+        /* Global Chat & Yapımcılar */
         .input-field {
             background: rgba(20, 15, 30, 0.7);
             border: 1px solid rgba(255, 183, 197, 0.3);
@@ -498,33 +534,25 @@
             flex-grow: 1;
         }
 
-        /* Yapimci Kartları */
+        /* Yapımcı Kartları (Fotoğrafsız, Sadece Hesaplar) */
         .creator-card {
             background: rgba(20, 15, 30, 0.7);
             border: 1px solid rgba(243, 229, 171, 0.3);
             border-radius: 14px;
-            padding: 20px;
+            padding: 25px;
             text-align: center;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 12px;
-        }
-
-        .creator-avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            border: 2px solid var(--genshin-gold);
-            background: url('https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80') center/cover;
+            gap: 15px;
         }
 
         .social-btn {
             background: linear-gradient(45deg, #833ab4, #fd1d1d, #fcb045);
             color: #fff;
-            padding: 8px 18px;
+            padding: 10px 22px;
             border-radius: 20px;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             font-weight: 600;
             text-decoration: none;
             display: inline-flex;
@@ -539,7 +567,7 @@
             opacity: 0.95;
         }
 
-        /* 5. SESLER & SÜRPRİZLER */
+        /* Sesler & Sürprizler */
         .soundboard {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -617,13 +645,16 @@
     <div class="bg-layer"></div>
     <div class="stars"></div>
 
-    <!-- Üst Sabit Navigasyon Çubuğu -->
+    <!-- Üst Sabit Navigasyon Çubuğu (Tüm Sekmeler Kesintisiz Kaydırılabilir) -->
     <div class="sticky-wrapper">
         <div class="nav-tabs">
             <button class="tab-btn active" onclick="switchTab('home')"><i class="fa-solid fa-house"></i> Ana Sayfa</button>
-            <button class="tab-btn" onclick="switchTab('games')"><i class="fa-solid fa-gamepad"></i> Mini Oyunlar (11 Adet)</button>
-            <button class="tab-btn" onclick="switchTab('lore')"><i class="fa-solid fa-book-open"></i> Teyvat Ansiklopedisi</button>
-            <button class="tab-btn" onclick="switchTab('messages')"><i class="fa-solid fa-comments"></i> Global Chat & Anılar</button>
+            <button class="tab-btn" onclick="switchTab('games')"><i class="fa-solid fa-gamepad"></i> Mini Oyunlar</button>
+            <button class="tab-btn" onclick="switchTab('poems')"><i class="fa-solid fa-feather"></i> Doğum Günü Şiirleri</button>
+            <button class="tab-btn" onclick="switchTab('genshin-lore')"><i class="fa-solid fa-gem"></i> Genshin Evreni</button>
+            <button class="tab-btn" onclick="switchTab('minecraft-info')"><i class="fa-solid fa-cube"></i> Minecraft Bilgileri</button>
+            <button class="tab-btn" onclick="switchTab('valorant-info')"><i class="fa-solid fa-shield-halved"></i> Valorant Bilgileri</button>
+            <button class="tab-btn" onclick="switchTab('messages')"><i class="fa-solid fa-comments"></i> Global Chat</button>
             <button class="tab-btn" onclick="switchTab('creator')"><i class="fa-solid fa-code"></i> Yapımcılar</button>
             <button class="tab-btn" onclick="switchTab('surprises')"><i class="fa-solid fa-wand-magic-sparkles"></i> Sürprizler</button>
         </div>
@@ -633,23 +664,23 @@
         <!-- Header -->
         <header>
             <div class="vision-badge">
-                <i class="fa-solid fa-gem"></i> Genshin Impact Özel Doğum Günü Anıtı <i class="fa-solid fa-gem"></i>
+                <i class="fa-solid fa-gem"></i> Özel Hatıra & Oyun Ansiklopedisi <i class="fa-solid fa-gem"></i>
             </div>
             <h1>İyi ki Doğdun, Melisa!</h1>
-            <p class="subtitle">Teyvat'ın sonsuz esintisi ve en tatlı karakterleriyle dolu profesyonel hatıra sitesi.</p>
+            <p class="subtitle">Teyvat'tan Minecraft küplerine ve Valorant taktiklerine kadar her şey senin için hazırlandı.</p>
         </header>
 
-        <!-- 1. SEKME: ANA SAYFA & KARAKTERLER -->
+        <!-- 1. SEKME: ANA SAYFA -->
         <div id="home" class="section-content active">
             <div class="card section-full">
                 <div class="card-title">
-                    <i class="fa-solid fa-users"></i> Teyvat'ın Doğum Günü Kutlama Ekibi (Anime & Oyun Karakterleri)
+                    <i class="fa-solid fa-users"></i> Teyvat & Oyun Dünyası Kutlama Ekibi
                 </div>
                 <div class="char-grid">
                     <div class="char-card">
                         <div class="char-img" style="background-image: url('https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=200&q=80')"></div>
                         <div class="char-name">Paimon</div>
-                        <div class="char-element">Rehber & Yoldaş</div>
+                        <div class="char-element">Acil Durum Yiyeceği</div>
                     </div>
                     <div class="char-card">
                         <div class="char-img" style="background-image: url('https://images.unsplash.com/photo-1563089145-599997674d42?auto=format&fit=crop&w=200&q=80')"></div>
@@ -664,7 +695,7 @@
                     <div class="char-card">
                         <div class="char-img" style="background-image: url('https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=200&q=80')"></div>
                         <div class="char-name">Lumine</div>
-                        <div class="char-element">Gezgin (Kız)</div>
+                        <div class="char-element">Gezgin</div>
                     </div>
                 </div>
             </div>
@@ -674,12 +705,12 @@
                     <i class="fa-solid fa-envelope-open-text"></i> Melisa İçin Özel Kalp Mektubu
                 </div>
                 <div class="letter-box">
-                    "Sevgili Melisa, bugün Teyvat'ın en parlak yıldızları senin için parlıyor! Paimon ve tüm dostların bu özel gününü kutlamak için masayı kurdu. Hayatının her seviyesi bir oyunun en eğlenceli bölümü gibi geçsin, karşına çıkan tüm zorluklar kolayca aşılsın. İyi ki doğdun Melisa!"
+                    "Sevgili Melisa, bugün senin günün! Teyvat'ın en parlak yıldızları, Minecraft'ın en değerli elmasları ve Valorant'ın zafer çığlıkları bugün senin onuruna yükseliyor. Hayatının her seviyesi en keyifli anlarla dolsun. İyi ki doğdun Melisa!"
                 </div>
             </div>
         </div>
 
-        <!-- 2. SEKME: 11 FARKLI MİNİ OYUN -->
+        <!-- 2. SEKME: MİNİ OYUNLAR (11 Adet) -->
         <div id="games" class="section-content">
             <div class="card section-full">
                 <div class="card-title" style="justify-content: center;">
@@ -690,13 +721,13 @@
                     <button class="mini-select-btn" onclick="switchGame('gacha')">2. Gacha Dilek Çarkı</button>
                     <button class="mini-select-btn" onclick="switchGame('quiz')">3. Genshin Bilgi Testi</button>
                     <button class="mini-select-btn" onclick="switchGame('clicker')">4. Paimon Tıkla-Kazan</button>
-                    <button class="mini-select-btn" onclick="switchGame('memory')">5. Element Hafıza Oyunu</button>
-                    <button class="mini-select-btn" onclick="switchGame('number')">6. Seviye Tahmin Oyunu</button>
+                    <button class="mini-select-btn" onclick="switchGame('memory')">5. Element Hafıza</button>
+                    <button class="mini-select-btn" onclick="switchGame('number')">6. Seviye Tahmin</button>
                     <button class="mini-select-btn" onclick="switchGame('rps')">7. Karakter Taş-Kağıt</button>
-                    <button class="mini-select-btn" onclick="switchGame('love')">8. Dostluk Skoru Ölçer</button>
+                    <button class="mini-select-btn" onclick="switchGame('love')">8. Dostluk Skoru</button>
                     <button class="mini-select-btn" onclick="switchGame('reaction')">9. Kritik Vuruş Hızı</button>
                     <button class="mini-select-btn" onclick="switchGame('fortune')">10. Günlük Fal Sandığı</button>
-                    <button class="mini-select-btn" onclick="switchGame('puzzle')">11. Teyvat Bulmaca Cevabı</button>
+                    <button class="mini-select-btn" onclick="switchGame('puzzle')">11. Teyvat Bulmaca</button>
                 </div>
 
                 <!-- 1. Primogem Avı -->
@@ -743,7 +774,7 @@
                 <div id="game-memory" class="game-panel">
                     <h4 style="color:var(--genshin-gold); margin-bottom:5px; font-family:'Cinzel',serif;">Element Eşleştirme</h4>
                     <p style="font-size:0.85rem; color:#d8b4e2;">Doğru element simgesini tahmin et!</p>
-                    <div id="memoryBox" style="margin: 20px 0; font-size: 1.1rem; color: var(--genshin-pink);">Anemo, Pyro, Hydro, Dendro... Hangi element özgürlüğü simgeler?</div>
+                    <div id="memoryBox" style="margin: 20px 0; font-size: 1.1rem; color: var(--genshin-pink);">Anemo, Pyro, Hydro... Hangi element özgürlüğü simgeler?</div>
                     <div style="display:flex; justify-content:center; gap:10px;">
                         <button class="mini-select-btn" onclick="checkMemory('Anemo')">Anemo</button>
                         <button class="mini-select-btn" onclick="checkMemory('Pyro')">Pyro</button>
@@ -812,8 +843,49 @@
             </div>
         </div>
 
-        <!-- 3. SEKME: TEYVAT ANSİKLOPEDİSİ (Detaylı Genshin Bilgileri) -->
-        <div id="lore" class="section-content">
+        <!-- 3. SEKME: DOĞUM GÜNÜ ŞİİRLERİ (Büsürü Şiir) -->
+        <div id="poems" class="section-content">
+            <div class="card section-full">
+                <div class="card-title">
+                    <i class="fa-solid fa-feather"></i> Melisa İçin Özel Doğum Günü Şiirleri
+                </div>
+                
+                <div class="poem-box">
+                    <div class="poem-title"><i class="fa-solid fa-star"></i> 1. Yıldızların Altında</div>
+                    <div class="poem-content">Teyvat rüzgarları eser bugün serin serin,
+Anemo'nun esintisi müjdeler en güzel gününü senin.
+Gökteki tüm yıldızlar sıraya dizilmiş baksana,
+İyi ki doğdun Melisa, neşe katıyorsun cihana!</div>
+                </div>
+
+                <div class="poem-box">
+                    <div class="poem-title"><i class="fa-solid fa-gem"></i> 2. Elmas Kalpli Prenses</div>
+                    <div class="poem-content">Minecraft dünyasında kazılır en derin madenler,
+Seni tanıdıktan sonra bitti tüm kederler.
+Elmaslardan daha parlak, saf ve temiz kalbin,
+Bugün en güzel pasta kesilsin senin için, sevgilin!</div>
+                </div>
+
+                <div class="poem-box">
+                    <div class="poem-title"><i class="fa-solid fa-shield-halved"></i> 3. ACE Havası</div>
+                    <div class="poem-content">Valorant'ta spike kurulur, round başlar yeniden,
+Sen odaya girince dağılır bütün dertler inceden.
+Ace sesleri yankılanır bugün senin şerefine,
+Mutluluklar yağsın ömrünün her bir köşesine!</div>
+                </div>
+
+                <div class="poem-box">
+                    <div class="poem-title"><i class="fa-solid fa-cake-candles"></i> 4. Yeni Yaşın Masalı</div>
+                    <div class="poem-content">Masallar diyarından süzülüp geldi bu kutlu gün,
+Paimon pastayı hazırladı, neşeyle gülsün yüzün.
+Yeni yaşın sana sağlık, huzur ve başarı getirsin,
+Bütün hayallerin gerçeğe dönüşüp yüzünü güldürsün!</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. SEKME: GENSHİN EVRENİ -->
+        <div id="genshin-lore" class="section-content">
             <div class="card section-full">
                 <div class="card-title">
                     <i class="fa-solid fa-scroll"></i> Genshin Impact & Teyvat Detaylı Ansiklopedisi
@@ -839,7 +911,61 @@
             </div>
         </div>
 
-        <!-- 4. SEKME: GLOBAL CHAT & ANI DUVARI -->
+        <!-- 5. SEKME: MINECRAFT BİLGİLERİ -->
+        <div id="minecraft-info" class="section-content">
+            <div class="card section-full">
+                <div class="card-title">
+                    <i class="fa-solid fa-cube"></i> Minecraft Dünyası & Hayatta Kalma Rehberi
+                </div>
+                <div class="info-grid">
+                    <div class="info-box">
+                        <h4><i class="fa-solid fa-mountain" style="color:#76f1ff;"></i> Elmas Madenciliği (Y Seviyesi)</h4>
+                        <p>En değerli elmaslar genellikle Y: -58 seviyesinde bulunur. Hayatındaki en değerli anıları da tıpkı bu derinliklerdeki hazineler gibi sakla!</p>
+                    </div>
+                    <div class="info-box">
+                        <h4><i class="fa-solid fa-house" style="color:#f3e5ab;"></i> Güvenli Sığınak İnşası</h4>
+                        <p>Geceleri Creeper'lardan korunmak için meşalelerle aydınlatılmış sağlam bir üs kurmak şarttır. Melisa'nın hayatı da huzurlu ve güvenli sığınaklarla dolsun.</p>
+                    </div>
+                    <div class="info-box">
+                        <h4><i class="fa-solid fa-dragon" style="color:#ff5c8d;"></i> Ender Dragon Savaşı</h4>
+                        <p>End dünyasının ejderhasını alt etmek strateji ve ekip çalışması ister. Hayatındaki tüm zorlu boss savaşlarını kolayca kazan!</p>
+                    </div>
+                    <div class="info-box">
+                        <h4><i class="fa-solid fa-wand-magic-sparkles" style="color:#ffb7c5;"></i> Büyü Masası & Enchantment</h4>
+                        <p>Kılıcına 'Sharpness V' ve zırhına 'Protection IV' basarak güçlü ol. Yeni yaşında senin de yeteneklerin her geçen gün güçlensin.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. SEKME: VALORANT BİLGİLERİ -->
+        <div id="valorant-info" class="section-content">
+            <div class="card section-full">
+                <div class="card-title">
+                    <i class="fa-solid fa-shield-halved"></i> Valorant Taktikleri & Ajan Rehberi
+                </div>
+                <div class="info-grid">
+                    <div class="info-box">
+                        <h4><i class="fa-solid fa-crosshairs" style="color:#ff5c8d;"></i> Crosshair Yerleşimi (Aim)</h4>
+                        <p>Headshot atmak için her zaman rakibin kafası hizasında nişangahını tutmalısın. Hedeflerine odaklanırken her zaman isabetli ol!</p>
+                    </div>
+                    <div class="info-box">
+                        <h4><i class="fa-solid fa-bolt" style="color:#f3e5ab;"></i> Ekonomi Yönetimi (Eco Rounds)</h4>
+                        <p>Takım olarak bütçeyi korumak ve doğru silahlara yatırım yapmak roundu kazandırır. Hayatta da kaynaklarını akıllıca yönet.</p>
+                    </div>
+                    <div class="info-box">
+                        <h4><i class="fa-solid fa-bullseye" style="color:#76f1ff;"></i> Spike Kurulumu & Plant</h4>
+                        <p>Bölgeyi temizledikten sonra Spike'ı güvenli bir noktaya kurmak ve 'site' savunmak zaferin anahtarıdır.</p>
+                    </div>
+                    <div class="info-box">
+                        <h4><i class="fa-solid fa-trophy" style="color:#ffb7c5;"></i> ACE & Clutch Yeteneği</h4>
+                        <p>Takım sıkıştığında tek başına maçı çevirmek bir Clutch ustasının işidir. Melisa da hayatındaki tüm zorlukları tek vuruşla alt etsin!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 7. SEKME: GLOBAL CHAT -->
         <div id="messages" class="section-content">
             <div class="card section-full">
                 <div class="card-title">
@@ -867,25 +993,23 @@
             </div>
         </div>
 
-        <!-- 5. SEKME: YAPIMCILAR (Instagram Linkleri İle) -->
+        <!-- 8. SEKME: YAPIMCILAR (Fotoğraflar Kaldırıldı, Sadece Hesaplar) -->
         <div id="creator" class="section-content">
             <div class="card section-full">
                 <div class="card-title">
                     <i class="fa-solid fa-code"></i> Proje Yapımcıları & Geliştiriciler
                 </div>
-                <p style="color: #d8b4e2; font-size: 0.95rem; margin-bottom: 20px; text-align:center;">Bu profesyonel Genshin anı ve doğum günü sitesinin mimarları:</p>
+                <p style="color: #d8b4e2; font-size: 0.95rem; margin-bottom: 20px; text-align:center;">Bu profesyonel anı ve doğum günü sitesinin mimarları:</p>
                 <div style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;">
                     <div class="creator-card" style="flex: 1; min-width: 260px;">
-                        <div class="creator-avatar"></div>
-                        <h4 style="font-family:'Cinzel',serif; color:var(--genshin-gold);">Geliştirici</h4>
-                        <p style="font-size:0.85rem; color:#d8b4e2;">Tasarım, Kodlama & Teyvat Entegrasyonu</p>
+                        <h4 style="font-family:'Cinzel',serif; color:var(--genshin-gold); font-size:1.2rem;">Geliştirici</h4>
+                        <p style="font-size:0.85rem; color:#d8b4e2;">Tasarım, Kodlama & Oyun Entegrasyonları</p>
                         <a href="https://www.instagram.com/qqepz?igsh=Z3gwZ2poM3liZ21l&utm_source=qr" target="_blank" class="social-btn">
                             <i class="fa-brands fa-instagram"></i> Instagram Hesabı 1
                         </a>
                     </div>
                     <div class="creator-card" style="flex: 1; min-width: 260px;">
-                        <div class="creator-avatar" style="border-color: var(--genshin-pink);"></div>
-                        <h4 style="font-family:'Cinzel',serif; color:var(--genshin-gold);">Tasarımcı</h4>
+                        <h4 style="font-family:'Cinzel',serif; color:var(--genshin-gold); font-size:1.2rem;">Tasarımcı</h4>
                         <p style="font-size:0.85rem; color:#d8b4e2;">Anime Grafikleri & Mini Oyun Altyapısı</p>
                         <a href="https://www.instagram.com/jesse.sea.lion?igsh=aHYyb2ZmcWo3ZWw5" target="_blank" class="social-btn">
                             <i class="fa-brands fa-instagram"></i> Instagram Hesabı 2
@@ -895,7 +1019,7 @@
             </div>
         </div>
 
-        <!-- 6. SEKME: SÜRPRİZLER & SESLER -->
+        <!-- 9. SEKME: SÜRPRİZLER -->
         <div id="surprises" class="section-content">
             <div class="card section-full">
                 <div class="card-title">
